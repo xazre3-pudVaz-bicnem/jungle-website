@@ -1,0 +1,195 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-jungle: #ffd400;
+  /*
+   * 明るい背景の上に「文字色」として使うための濃いゴールド。
+   * ブランドの黄色（#ffd400）は白背景でのコントラストが 1.6:1 しかなく、
+   * 文字色には使えないため、テキスト用に別途この色を用意しています。
+   * 白背景で 4.92:1、薄グレー背景で 4.51:1（WCAG AA を満たします）。
+   */
+  --color-jungle-deep: #8a6d00;
+  --color-ink: #0a0a0a;
+  --color-body: #222222;
+  --color-mist: #f5f5f3;
+  --color-line: #e2e2de;
+
+  --font-sans: var(--font-noto-sans-jp), 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+  --font-display: var(--font-anton), var(--font-noto-sans-jp), sans-serif;
+
+  --breakpoint-xs: 24rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: #ffffff;
+    color: var(--color-body);
+    font-feature-settings: 'palt';
+    text-underline-offset: 0.2em;
+  }
+
+  /* 見出しは行間を詰めて力強く */
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  /* キーボード操作時のフォーカスを必ず視認できるように */
+  :focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* 黄色背景の上でのフォーカスリングは黒のままでコントラストが取れる */
+  ::selection {
+    background-color: var(--color-jungle);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  /* ------------------------------ タイポグラフィ ------------------------------ */
+
+  /* 英字ラベル。セクションの上に置く小さな見出し */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 2rem;
+    height: 3px;
+    background-color: var(--color-jungle);
+  }
+
+  .eyebrow-light {
+    color: #ffffff;
+  }
+
+  /* 大きな英字ディスプレイ */
+  .display {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+    line-height: 0.92;
+    text-transform: uppercase;
+  }
+
+  /* 見出しの黄色いアンダーライン */
+  .marker {
+    background-image: linear-gradient(transparent 62%, var(--color-jungle) 62%);
+    background-repeat: no-repeat;
+  }
+
+  /* ------------------------------- リンク・ボタン ------------------------------ */
+
+  .link-underline {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--color-line);
+    transition: text-decoration-color 0.2s ease;
+  }
+
+  .link-underline:hover {
+    text-decoration-color: var(--color-ink);
+  }
+
+  /* ------------------------------- 罫線レイアウト ----------------------------- */
+
+  /* 一覧をカードではなく罫線で区切るエディトリアル表現 */
+  .rule-list > * + * {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .rule-list-dark > * + * {
+    border-top: 1px solid rgb(255 255 255 / 0.16);
+  }
+
+  /* ------------------------------ 写真プレースホルダ --------------------------- */
+
+  /* 画像が未配置でもレイアウトが崩れないよう、黒地＋黄ラインで成立させる */
+  .photo-fallback {
+    background-color: var(--color-ink);
+    background-image:
+      repeating-linear-gradient(
+        135deg,
+        rgb(255 212 0 / 0.11) 0px,
+        rgb(255 212 0 / 0.11) 2px,
+        transparent 2px,
+        transparent 14px
+      );
+  }
+
+  /* --------------------------------- 本文 ------------------------------------ */
+
+  .prose-jungle {
+    color: var(--color-body);
+    line-height: 1.95;
+  }
+
+  .prose-jungle p {
+    margin-block: 1.15em;
+  }
+
+  .prose-jungle a {
+    color: var(--color-ink);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--color-jungle);
+  }
+
+  .prose-jungle a:hover {
+    background-color: var(--color-jungle);
+  }
+}
+
+@layer utilities {
+  /* 斜めの切り替え。物流らしいスピード感の表現に使用 */
+  .clip-slant-b {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 3.5vw));
+  }
+
+  .clip-slant-t {
+    clip-path: polygon(0 3.5vw, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .writing-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+}
+
+/* 動きを減らす設定のユーザーにはアニメーションを無効化 */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
