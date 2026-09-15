@@ -7,18 +7,19 @@ import { EntryCta } from '@/components/sections/EntryCta';
 import { JsonLd } from '@/components/ui/JsonLd';
 import { imagePaths } from '@/lib/images';
 import { buildMetadata } from '@/lib/seo';
-import { faqPageJsonLd } from '@/lib/jsonld';
+import { faqItemsToJsonLd, websiteJsonLd } from '@/lib/structured-data';
 import { faqsByIds } from '@/data/faq';
 import { openJobs } from '@/data/jobs';
 import { columns } from '@/data/columns';
 import { applicationSteps, dailyFlowSteps, workFeatures } from '@/data/process';
 import { companyProfileRows } from '@/data/company';
+import { businessDefinition } from '@/data/site';
 
 export const metadata: Metadata = buildMetadata({
   // ルートページには layout の title.template が適用されないため、サイト名まで明記します
-  title: '兵庫・明石の軽貨物配送｜JUNGLE',
+  title: '兵庫・明石の軽貨物配送とドライバー求人｜JUNGLE',
   description:
-    '兵庫県明石市・神戸市西部エリアで宅配および企業配送を行う軽貨物配送のJUNGLE。事業拡大にともない軽貨物ドライバーを募集しています。未経験の方もご相談ください。',
+    'JUNGLE TRANSPORTは兵庫県明石市・神戸市西区で個人宅向け宅配と企業向け配送を行う軽貨物配送事業者です。配送のご依頼と、軽貨物ドライバーの求人情報を掲載しています。',
   path: '/',
 });
 
@@ -28,61 +29,104 @@ export default function HomePage() {
   const jobs = openJobs();
   const faqItems = faqsByIds(topFaqIds);
   const latestColumns = columns.slice(0, 3);
-  const businessRow = companyProfileRows.find((row) => row.label === '事業内容');
+  const businessRow = companyProfileRows().find((row) => row.label === '事業内容');
 
   return (
     <>
-      <JsonLd data={faqPageJsonLd(faqItems)} />
+      <JsonLd data={[websiteJsonLd(), faqItemsToJsonLd(faqItems)]} />
 
       {/* ------------------------------- ヒーロー ------------------------------- */}
-      <section className="relative flex min-h-[88svh] items-end overflow-hidden bg-ink">
+      {/*
+        モバイルでは横長写真を全面に敷くと被写体が大きく切れてしまうため、
+        写真を本来の比率のまま上部に置き、その下に見出しを重ねる構成にしています。
+        sm 以上では従来どおり全面に敷いて見出しを重ねます。
+      */}
+      <section className="relative flex flex-col justify-end overflow-hidden bg-ink sm:min-h-[88svh]">
         {/*
           Photo は内部で position: relative を持つため、absolute は外側のラッパーで指定します。
           Photo に直接 absolute を渡すと position 指定が衝突し、高さが 0 になります。
         */}
-        <div className="absolute inset-0">
+        <div className="relative mt-16 aspect-4/3 w-full sm:absolute sm:inset-0 sm:mt-0 sm:aspect-auto">
           <Photo
-            src={imagePaths.hero}
-            alt="明石海峡大橋を背に、軽バンの前に立つJUNGLEの配送ドライバー"
+            src={imagePaths.akashiHero}
+            alt="明石海峡大橋を背に、軽貨物車両の前に立つJUNGLE TRANSPORTの配送ドライバー"
             fallbackLabel="JUNGLE TRANSPORT"
             className="h-full w-full"
             priority
             sizes="100vw"
-            overlay="strong"
+            overlay="soft"
+          />
+          {/* 写真の下端を黒へ溶かし、見出しとの境目をなくす */}
+          <div
+            className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink to-transparent sm:hidden"
+            aria-hidden="true"
           />
         </div>
-        {/* 下端の可読性を確保する暗幕 */}
+
+        {/* sm以上：下端の可読性を確保する暗幕 */}
         <div
-          className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink via-ink/70 to-transparent"
+          className="absolute inset-x-0 bottom-0 hidden h-2/3 bg-gradient-to-t from-ink via-ink/70 to-transparent sm:block"
           aria-hidden="true"
         />
         <div className="absolute inset-y-0 left-0 w-1.5 bg-jungle sm:w-2" aria-hidden="true" />
 
-        <Container size="wide" className="relative z-10 pt-32 pb-20 sm:pb-28">
+        <Container size="wide" className="relative z-10 pb-14 sm:pt-32 sm:pb-28">
           <p className="display text-xs tracking-[0.3em] text-jungle sm:text-sm">
             Light Cargo Delivery / Hyogo · Akashi
           </p>
 
-          <h1 className="mt-7 text-[2.5rem] leading-[1.12] font-bold text-white sm:text-[4.5rem] lg:text-[5.75rem]">
+          <h1 className="mt-5 text-[2.5rem] leading-[1.12] font-bold text-white sm:mt-7 sm:text-[4.5rem] lg:text-[5.75rem]">
             兵庫の街を、
             <br />
             走る。
           </h1>
 
-          <p className="mt-8 max-w-2xl text-[0.9375rem] leading-8 text-white/80 sm:text-base">
-            JUNGLEは、兵庫県明石市・神戸市西部エリアで軽貨物配送を行っています。個人宅への宅配から企業配送まで、地域の「運ぶ」を担う仕事です。事業拡大にともない、一緒に走る軽貨物ドライバーを募集しています。未経験の方もご相談ください。
+          <p className="mt-7 max-w-2xl text-[0.9375rem] leading-8 text-white/80 sm:mt-8 sm:text-base">
+            JUNGLE TRANSPORTは、兵庫県明石市・神戸市西部を中心に軽貨物配送を行っています。個人宅への宅配から企業配送まで、地域の「運ぶ」を担う仕事です。
           </p>
-
-          <div className="mt-11 flex flex-wrap items-center gap-4">
-            <ButtonLink href="/recruit" variant="primary" className="text-base">
-              軽貨物ドライバー募集要項
-            </ButtonLink>
-            <TextLink href="/service" tone="light">
-              事業内容を見る
-            </TextLink>
-          </div>
         </Container>
       </section>
+
+      {/* --------------------- ヒーロー直下の導入（事業の定義） --------------------- */}
+      <Section tone="white" spacing="tight">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+            <div>
+              <h2 className="text-xl leading-[1.7] font-bold text-ink sm:text-2xl">
+                {businessDefinition}
+              </h2>
+              <p className="mt-6 text-[0.9375rem] leading-8 text-body">
+                取り扱うのは、軽自動車に積載できるサイズの荷物です。通販商品などを個人宅へお届けする宅配と、企業・事業所の間を結ぶ企業配送の両方を担当しています。事業拡大にともない、明石市・神戸市西区で走る
+                <strong className="font-bold text-ink">軽貨物ドライバーを募集</strong>
+                しています。普通自動車運転免許があれば、配送の実務経験がない方も応募いただけます。
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <ButtonLink href="/recruit" variant="ink">
+                  軽貨物ドライバーの募集要項を見る
+                </ButtonLink>
+                <ButtonLink href="/contact/business" variant="outline">
+                  配送のご依頼（法人の方）
+                </ButtonLink>
+              </div>
+            </div>
+
+            {/* 事業者情報の要点。AI検索・ローカル検索で拾われやすいよう定義形式で置く */}
+            <dl className="rule-list border-t-2 border-ink">
+              {[
+                ['事業内容', '軽貨物配送（個人宅向け宅配・企業向け配送）'],
+                ['対応エリア', '兵庫県明石市・神戸市西区'],
+                ['募集職種', '軽貨物ドライバー（業務委託）'],
+                ['応募資格', '普通自動車運転免許（配送経験・学歴は不問）'],
+              ].map(([label, value]) => (
+                <div key={label} className="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
+                  <dt className="w-28 shrink-0 text-xs font-bold text-body/60">{label}</dt>
+                  <dd className="text-sm leading-7 font-bold text-ink">{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </Container>
+      </Section>
 
       {/* ---------------------------- JUNGLEの紹介 ---------------------------- */}
       <Section tone="white" spacing="loose">
@@ -90,7 +134,7 @@ export default function HomePage() {
           <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-20">
             <div className="relative">
               <Photo
-                src={imagePaths.driver02}
+                src={imagePaths.driverTerminal}
                 alt="配送先で端末を操作するJUNGLEのドライバーと軽バン"
                 fallbackLabel="OUR VAN"
                 className="aspect-4/5 w-full"
@@ -233,21 +277,21 @@ export default function HomePage() {
 
             <div className="grid grid-cols-2 gap-4">
               <Photo
-                src={imagePaths.loading01}
+                src={imagePaths.loadingPackages}
                 alt="配送前に軽バンへ荷物を積み込む様子"
                 fallbackLabel="LOADING"
                 className="col-span-2 aspect-16/10 w-full"
                 sizes="(min-width: 1024px) 40vw, 100vw"
               />
               <Photo
-                src={imagePaths.driver01}
+                src={imagePaths.homeDelivery}
                 alt="配達先へ荷物を届けるJUNGLEのドライバー"
                 fallbackLabel="DRIVER"
                 className="aspect-square w-full"
                 sizes="(min-width: 1024px) 20vw, 50vw"
               />
               <Photo
-                src={imagePaths.van02}
+                src={imagePaths.vanKobeNishi}
                 alt="明石エリアの配送ルートを走行する軽貨物車両"
                 fallbackLabel="ROUTE"
                 className="aspect-square w-full"
@@ -326,7 +370,7 @@ export default function HomePage() {
         <Container>
           <div className="grid gap-14 lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-20">
             <Photo
-              src={imagePaths.training01}
+              src={imagePaths.training}
               alt="先輩ドライバーが未経験のスタッフへ配送の進め方を説明する様子"
               fallbackLabel="TRAINING"
               className="aspect-5/4 w-full"
@@ -554,7 +598,7 @@ export default function HomePage() {
 
             <div className="relative">
               <Photo
-                src={imagePaths.team01}
+                src={imagePaths.team}
                 alt="JUNGLEで稼働するドライバーたち"
                 fallbackLabel="TEAM"
                 className="aspect-4/3 w-full"

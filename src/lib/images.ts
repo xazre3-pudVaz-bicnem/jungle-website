@@ -28,51 +28,54 @@ export function hasPublicImage(src: string): boolean {
 }
 
 /**
- * 想定している画像ファイルの一覧。
+ * 画像パスの一覧。
+ *
+ * ファイル名は検索エンジンが内容を推測できるよう、被写体と地域が分かる英語名にしています
+ * （`image1.webp` のような無意味な名前や日本語ファイル名は使いません）。
  * public/images/ に同名のファイルを置けば、対応する箇所が自動的に写真に差し替わります。
  */
 export const imagePaths = {
-  /** ヒーロー：ドライバー＋軽バン＋明石海峡大橋（横長・左に余白があり見出しを重ねられる） */
-  hero: '/images/hero-jungle.webp',
-  /** ヒーロー：夕景の明石海峡大橋と2台の軽バン（横長） */
-  heroSunset: '/images/hero-sunset.webp',
-  /** 明石海峡大橋を背にしたドライバーと車両（横長） */
-  vanAkashi: '/images/van-akashi.webp',
-  /** 夕景の住宅街で車両にもたれるドライバー（横長） */
-  driver03: '/images/driver-03.webp',
-  /** 住宅街を走行する軽バン（横長・躍動感） */
-  van01: '/images/delivery-van-01.webp',
-  /** 青空の下を走行する軽バン（横長） */
-  van02: '/images/delivery-van-02.webp',
+  /* ---------------------------- 横長（ヒーロー向け） ---------------------------- */
+  /** ドライバー＋軽バン＋明石海峡大橋。左に余白があり見出しを重ねられる */
+  akashiHero: '/images/akashi-light-cargo-driver-hero.webp',
+  /** 夕景の明石海峡大橋と2台の軽バン */
+  bridgeVans: '/images/akashi-kaikyo-bridge-delivery-vans.webp',
+  /** 明石海峡大橋を背にしたドライバーと車両 */
+  vanBridge: '/images/light-cargo-van-akashi-bridge.webp',
+  /** 夕景の住宅街で車両にもたれるドライバー */
+  driverSunset: '/images/jungle-driver-residential-sunset.webp',
+  /** 明石市内の住宅街を走行する軽バン */
+  vanAkashiStreet: '/images/light-cargo-van-akashi-street.webp',
+  /** 青空の下を走行する軽バン（神戸市西区の紹介に使用） */
+  vanKobeNishi: '/images/kobe-nishi-delivery-van.webp',
 
+  /* ------------------------------ 4:3（本文向け） ------------------------------ */
   /** 玄関先で荷物を手渡すドライバー */
-  driver01: '/images/driver-01.webp',
+  homeDelivery: '/images/akashi-home-delivery-driver.webp',
   /** 端末を操作するドライバーと車両（縦位置のトリミングにも耐える） */
-  driver02: '/images/driver-02.webp',
+  driverTerminal: '/images/jungle-driver-delivery-terminal.webp',
   /** 車両の前でタブレットを確認するドライバー */
-  driverTablet: '/images/driver-tablet.webp',
+  driverTablet: '/images/jungle-driver-tablet-check.webp',
   /** 車両後部へ段ボールを積み込む様子 */
-  loading01: '/images/loading-01.webp',
+  loadingPackages: '/images/jungle-driver-loading-packages.webp',
   /** 手袋をした手で荷物を積み込む寄りの写真 */
-  loading02: '/images/loading-02.webp',
+  loadingCloseup: '/images/light-cargo-loading-boxes-closeup.webp',
   /** 高齢のお客様へ荷物を届ける場面 */
-  delivery01: '/images/delivery-01.webp',
+  handoverSenior: '/images/home-delivery-handover-senior.webp',
   /** 車両後部で荷物を確認する2人のドライバー */
-  deliveryPair: '/images/delivery-pair.webp',
-  /** 荷物棚のある配送拠点と軽バン */
-  depot01: '/images/depot-01.webp',
+  driversCheck: '/images/jungle-drivers-package-check.webp',
+  /** 荷物棚のある配送拠点と軽バン（企業配送の説明に使用） */
+  businessWarehouse: '/images/business-delivery-warehouse.webp',
   /** 台車で荷物を運ぶ配送拠点の様子 */
-  depot02: '/images/depot-02.webp',
+  depotCart: '/images/delivery-depot-cart-loading.webp',
   /** 車両の前に並ぶ4人のスタッフ（ジャケット） */
-  team01: '/images/team-01.webp',
+  team: '/images/jungle-delivery-team.webp',
   /** 車両の前に並ぶ4人のスタッフ（ポロシャツ） */
-  team02: '/images/team-02.webp',
+  teamVans: '/images/jungle-delivery-team-vans.webp',
   /** 先輩が2人のスタッフへ説明する様子（研修） */
-  training01: '/images/training-01.webp',
-  /** 3人で書類を確認する様子（研修・打ち合わせ） */
-  training02: '/images/training-02.webp',
-  /** 荷物とスマートフォンでの完了処理 */
-  scan01: '/images/scan-01.webp',
-
-  logo: '/logo.jpg',
+  training: '/images/jungle-driver-training.webp',
+  /** 3人で書類を確認する様子（打ち合わせ） */
+  briefing: '/images/jungle-driver-briefing.webp',
+  /** 荷物とスマートフォンでの配達完了処理 */
+  completionScan: '/images/delivery-completion-smartphone.webp',
 } as const;

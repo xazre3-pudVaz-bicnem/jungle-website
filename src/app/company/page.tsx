@@ -7,7 +7,7 @@ import { EntryCta } from '@/components/sections/EntryCta';
 import { buildMetadata } from '@/lib/seo';
 import { breadcrumbJsonLd, organizationJsonLd, type Crumb } from '@/lib/jsonld';
 import { imagePaths } from '@/lib/images';
-import { company, companyProfileRows, companyTodos } from '@/data/company';
+import { company, companyProfileRows, companyTodos, show } from '@/data/company';
 import { socialLinks } from '@/data/site';
 import { services } from '@/data/services';
 
@@ -25,7 +25,7 @@ const crumbs: Crumb[] = [
 
 export default function CompanyPage() {
   // value が null の行は表示しない（推測値・ダミーを画面に出さないため）
-  const visibleRows = companyProfileRows.filter((row) => row.value !== null);
+  const visibleRows = companyProfileRows();
 
   return (
     <>
@@ -35,7 +35,7 @@ export default function CompanyPage() {
         eyebrow="Company"
         title="会社概要"
         lead="兵庫県明石市・神戸市西部エリアを中心に軽貨物配送を行うJUNGLE TRANSPORTの基本情報です。"
-        image={imagePaths.depot02}
+        image={imagePaths.depotCart}
         imageAlt="配送拠点で台車を使って荷物を積み替えるJUNGLEのスタッフ"
       />
       <Breadcrumbs crumbs={crumbs} />
@@ -45,7 +45,7 @@ export default function CompanyPage() {
         <Container>
           <div className="grid gap-14 lg:grid-cols-[1.4fr_1fr] lg:gap-20">
             <div>
-              <SectionHeading eyebrow="Profile" title={company.name} />
+              <SectionHeading eyebrow="Profile" title={show(company.brandName) ?? 'JUNGLE TRANSPORT'} />
 
               <dl className="rule-list mt-10 border-t-2 border-ink">
                 {visibleRows.map((row) => (
@@ -111,6 +111,18 @@ export default function CompanyPage() {
                       </a>
                     </div>
                   )}
+
+                  {socialLinks.email && (
+                    <div className="border-l-2 border-white/30 pl-5">
+                      <p className="text-sm font-bold text-white">メール</p>
+                      <a
+                        href={`mailto:${socialLinks.email}`}
+                        className="mt-2 inline-block text-sm font-bold break-all text-jungle"
+                      >
+                        {socialLinks.email}
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -150,7 +162,7 @@ export default function CompanyPage() {
             lead="以下の項目は、公開できる情報として確認が取れ次第このページに掲載します。"
           />
           <ul className="mt-9 grid gap-x-10 gap-y-3 sm:grid-cols-2">
-            {companyTodos.map((item) => (
+            {companyTodos().map((item) => (
               <li key={item} className="flex gap-3 text-sm leading-7 text-body/75">
                 <span aria-hidden="true" className="mt-3 h-1 w-3 shrink-0 bg-line" />
                 {item}

@@ -32,7 +32,7 @@ export default function FaqPage() {
         eyebrow="FAQ"
         title="よくある質問"
         lead="応募を検討される段階でいただくことの多いご質問にお答えします。確認が取れていない条件については、正直に「面談時にご確認ください」とお伝えしています。"
-        image={imagePaths.scan01}
+        image={imagePaths.completionScan}
         imageAlt="配達完了の記録をスマートフォンで入力するJUNGLEのドライバー"
       />
       <Breadcrumbs crumbs={crumbs} />

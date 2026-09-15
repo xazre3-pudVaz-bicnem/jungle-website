@@ -86,7 +86,7 @@ export default function EntryPage() {
               <div className="bg-ink p-7">
                 <h2 className="text-base font-bold text-white">フォーム以外の連絡方法</h2>
                 <p className="mt-4 text-sm leading-7 text-white/70">
-                  お電話やInstagramのダイレクトメッセージからもご連絡いただけます。ご都合のよい方法をお選びください。
+                  お電話・メール・Instagramのダイレクトメッセージからもご連絡いただけます。ご都合のよい方法をお選びください。
                 </p>
                 {socialLinks.tel && (
                   <a
@@ -95,6 +95,14 @@ export default function EntryPage() {
                     aria-label={`電話で問い合わせる ${socialLinks.tel}`}
                   >
                     {socialLinks.tel}
+                  </a>
+                )}
+                {socialLinks.email && (
+                  <a
+                    href={`mailto:${socialLinks.email}`}
+                    className="mt-3 flex min-h-12 items-center justify-center border-2 border-white/60 px-3 text-center text-xs font-bold break-all text-white transition-colors hover:bg-white hover:text-ink sm:text-sm"
+                  >
+                    {socialLinks.email}
                   </a>
                 )}
                 <a

@@ -31,7 +31,7 @@ export default function DailyFlowPage() {
         eyebrow="One Day"
         title="ある1日の流れ"
         lead="稼働日の業務が、どのような順番で進んでいくのかをご紹介します。開始時刻や終了時刻は担当する案件によって異なるため、業務の流れのみを掲載しています。"
-        image={imagePaths.vanAkashi}
+        image={imagePaths.vanBridge}
         imageAlt="明石海峡大橋を望む場所で稼働の準備をするJUNGLEのドライバー"
       />
       <Breadcrumbs crumbs={crumbs} />
@@ -68,7 +68,7 @@ export default function DailyFlowPage() {
                 {/* 3ステップごとに写真を差し込み、リズムをつける */}
                 {index % 3 === 0 ? (
                   <Photo
-                    src={index === 0 ? imagePaths.van02 : imagePaths.driver01}
+                    src={index === 0 ? imagePaths.vanKobeNishi : imagePaths.homeDelivery}
                     alt={
                       index === 0
                         ? '出発前の点検を終えて走り出すJUNGLEの軽貨物車両'

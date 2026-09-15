@@ -6,7 +6,7 @@ import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { JsonLd } from '@/components/ui/JsonLd';
 import { buildMetadata } from '@/lib/seo';
 import { breadcrumbJsonLd, type Crumb } from '@/lib/jsonld';
-import { company } from '@/data/company';
+import { company, show } from '@/data/company';
 import { socialLinks } from '@/data/site';
 
 export const metadata: Metadata = buildMetadata({
@@ -25,7 +25,7 @@ const sections = [
   {
     heading: '1. 基本方針',
     body: [
-      `${company.name}（以下「当社」といいます）は、当ウェブサイトの運営およびドライバー採用活動において取得する個人情報の重要性を認識し、個人情報の保護に関する法律その他の関係法令を遵守し、適切に取り扱います。`,
+      `${show(company.legalName) ?? 'JUNGLE'}（以下「当社」といいます）は、当ウェブサイトの運営およびドライバー採用活動において取得する個人情報の重要性を認識し、個人情報の保護に関する法律その他の関係法令を遵守し、適切に取り扱います。`,
     ],
   },
   {
@@ -145,10 +145,33 @@ export default function PrivacyPage() {
               <dl className="rule-list mt-5 border-t border-line">
                 <div className="grid gap-2 py-5 sm:grid-cols-[9rem_1fr] sm:gap-8">
                   <dt className="text-sm font-bold text-ink">名称</dt>
-                  <dd className="text-sm leading-7 text-body">{company.name}</dd>
+                  <dd className="text-sm leading-7 text-body">{show(company.brandName) ?? 'JUNGLE TRANSPORT'}</dd>
                 </div>
+                {socialLinks.email && (
+                  <div className="grid gap-2 py-5 sm:grid-cols-[9rem_1fr] sm:gap-8">
+                    <dt className="text-sm font-bold text-ink">メールアドレス</dt>
+                    <dd className="text-sm leading-7 text-body">
+                      <a href={`mailto:${socialLinks.email}`} className="link-underline font-bold text-ink">
+                        {socialLinks.email}
+                      </a>
+                    </dd>
+                  </div>
+                )}
+                {socialLinks.tel && (
+                  <div className="grid gap-2 py-5 sm:grid-cols-[9rem_1fr] sm:gap-8">
+                    <dt className="text-sm font-bold text-ink">電話番号</dt>
+                    <dd className="text-sm leading-7 text-body">
+                      <a
+                        href={`tel:${socialLinks.tel.replace(/-/g, '')}`}
+                        className="link-underline font-bold text-ink"
+                      >
+                        {socialLinks.tel}
+                      </a>
+                    </dd>
+                  </div>
+                )}
                 <div className="grid gap-2 py-5 sm:grid-cols-[9rem_1fr] sm:gap-8">
-                  <dt className="text-sm font-bold text-ink">連絡方法</dt>
+                  <dt className="text-sm font-bold text-ink">その他の連絡方法</dt>
                   <dd className="text-sm leading-7 text-body">
                     <a
                       href={socialLinks.instagram}
@@ -163,11 +186,6 @@ export default function PrivacyPage() {
                       応募フォーム
                     </Link>
                     のご相談欄よりご連絡ください。
-                    {!socialLinks.email && (
-                      <span className="mt-2 block text-xs text-body/60">
-                        ※ 専用のお問い合わせ用メールアドレスは、準備でき次第こちらに掲載します。
-                      </span>
-                    )}
                   </dd>
                 </div>
               </dl>

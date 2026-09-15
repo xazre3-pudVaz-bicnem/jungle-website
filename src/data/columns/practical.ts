@@ -6,6 +6,12 @@ import type { Column } from '../columns';
 export const practicalColumns: Column[] = [
   {
     slug: 'own-vehicle-vs-lease',
+    primaryKeyword: '軽貨物 車両リース 持ち込み 違い',
+    secondaryKeywords: ['軽貨物 車両リース 費用', '軽貨物 車なし'],
+    searchIntent: '車両を自分で用意するかリースするかを判断したい（業界一般の情報）',
+    verifiedFacts: [
+      'JUNGLEには車両リース制度があり、持ち込みも相談できる',
+    ],
     title: '車両持ち込みと車両貸出の違い｜どちらを選ぶべきか判断基準を解説',
     description:
       '軽貨物ドライバーの車両を「自分で用意する」か「会社のリースを使う」かの違いを解説します。初期費用・月額負担・維持費の考え方から、自分に合う選び方を整理します。',
@@ -110,6 +116,12 @@ export const practicalColumns: Column[] = [
 
   {
     slug: 'working-in-akashi',
+    primaryKeyword: '明石 軽貨物ドライバー 特徴',
+    secondaryKeywords: ['明石 配送エリア', '明石市 宅配 走りやすさ'],
+    searchIntent: '明石エリアで軽貨物ドライバーとして働く場合の実際を知りたい',
+    verifiedFacts: [
+      'JUNGLEは明石エリアと神戸西エリアを配送範囲としている',
+    ],
     title: '明石市で軽貨物ドライバーとして働く特徴｜エリアの走りやすさを解説',
     description:
       '兵庫県明石市で軽貨物ドライバーとして働く際のエリア特性を解説します。市街地と住宅地の構成、神戸西エリアとのつながり、配送で意識したいポイントを整理します。',
@@ -196,6 +208,13 @@ export const practicalColumns: Column[] = [
 
   {
     slug: 'driver-income-and-expenses',
+    primaryKeyword: '軽貨物ドライバー 報酬 経費',
+    secondaryKeywords: ['軽貨物 手取り', '業務委託ドライバー 経費一覧'],
+    searchIntent: '軽貨物ドライバーの収入と経費、手取りの実態を知りたい（業界一般の情報）',
+    verifiedFacts: [
+      'JUNGLEは「未経験でも月収30万円〜可能」という報酬例を掲載している',
+      'JUNGLEには日当保証がある',
+    ],
     title: '軽貨物ドライバーの報酬と必要経費｜手取りの考え方を整理する',
     description:
       '軽貨物ドライバーの報酬体系と、業務委託で自己負担となる経費を解説します。求人票の金額と実際の手取りの違い、収支を計算する手順を具体的に説明します。',
@@ -309,6 +328,12 @@ export const practicalColumns: Column[] = [
 
   {
     slug: 'checkpoints-before-applying',
+    primaryKeyword: '軽貨物 求人 選び方',
+    secondaryKeywords: ['軽貨物求人 確認項目', '軽貨物 面談 質問'],
+    searchIntent: '軽貨物の求人を比較・判断する基準を知りたい（業界一般の情報）',
+    verifiedFacts: [
+      'JUNGLEは確認が取れた条件のみを掲載し、未確認項目は明記する方針をとっている',
+    ],
     title: '求人応募前に確認したいポイント｜軽貨物の求人票を読み解く7つの視点',
     description:
       '軽貨物ドライバーの求人に応募する前に確認すべきポイントを7つに整理しました。求人票の見方、面談で聞くべき質問、避けたほうがよい求人の特徴を解説します。',

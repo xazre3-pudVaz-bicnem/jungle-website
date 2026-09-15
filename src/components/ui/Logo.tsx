@@ -4,30 +4,27 @@ import { siteConfig } from '@/data/site';
 /**
  * ロゴ表示。
  *
- * 現在のロゴ（public/logo.jpg）は背景が白の JPG で、透過情報を持ちません。
- * そのため暗い背景の上にそのまま置くと白い四角が浮いてしまいます。
- * ここでは白い下地（チップ）の中にロゴを収めることで、明るい背景でも
- * 暗い背景でも同じ見え方になるようにしています。
- *
- * ※ 透過PNG または SVG のロゴが用意できた場合は、public/ に差し替えたうえで
- *    `chip` を false にすると、下地なしで表示できます。
+ * 白背景を透過したロゴを使い、背景になじませて表示します。
+ * 「TRANSPORT」の文字とトラックは黒のため、暗い背景では見えなくなります。
+ * 暗い背景の上では `tone="dark"` を指定し、黒の部分を白にした版を使ってください。
  */
 export function Logo({
   className = '',
   width = 200,
   height = 50,
   priority = false,
-  chip = true,
+  tone = 'light',
 }: {
   className?: string;
   width?: number;
   height?: number;
   priority?: boolean;
-  chip?: boolean;
+  /** 置く背景の明るさ */
+  tone?: 'light' | 'dark';
 }) {
-  const image = (
+  return (
     <Image
-      src={siteConfig.logoWordmark}
+      src={tone === 'dark' ? siteConfig.logoWordmark.onDark : siteConfig.logoWordmark.onLight}
       alt={`${siteConfig.name}のロゴ`}
       width={width}
       height={height}
@@ -35,8 +32,4 @@ export function Logo({
       className={`w-auto object-contain ${className}`}
     />
   );
-
-  if (!chip) return image;
-
-  return <span className="inline-flex items-center bg-white px-3 py-1.5">{image}</span>;
 }

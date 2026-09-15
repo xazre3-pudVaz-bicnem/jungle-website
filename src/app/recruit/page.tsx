@@ -16,9 +16,9 @@ import { applicationSteps, workFeatures } from '@/data/process';
 import { columns } from '@/data/columns';
 
 export const metadata: Metadata = buildMetadata({
-  title: '兵庫県の軽貨物ドライバー求人',
+  title: '兵庫県の軽貨物ドライバー求人｜未経験者も募集',
   description:
-    '兵庫県明石市・神戸市西部エリアで軽貨物ドライバーを募集しています。業務委託契約、未経験可、車両リースあり、日当保証あり。仕事内容と応募方法をご確認ください。',
+    'JUNGLE TRANSPORTは兵庫県明石市・神戸市西区で軽貨物ドライバーを募集しています。業務委託契約・未経験可・車両リースあり・日当保証あり。エリア別・条件別の採用ガイドもご用意しています。',
   path: '/recruit',
 });
 
@@ -48,7 +48,7 @@ export default function RecruitPage() {
           </>
         }
         lead="事業拡大にともない、明石・神戸西エリアで走る軽貨物ドライバーを募集しています。普通自動車運転免許があれば、配送の実務経験がない方も応募いただけます。"
-        image={imagePaths.driver03}
+        image={imagePaths.driverSunset}
         imageAlt="夕暮れの住宅街で配送を終えたJUNGLEの軽貨物ドライバー"
       />
       <Breadcrumbs crumbs={crumbs} />
@@ -183,7 +183,7 @@ export default function RecruitPage() {
                 lead="各段階に要する日数は、ご本人の準備状況や案件の状況によって変わります。目安は面談時にお伝えします。"
               />
               <Photo
-                src={imagePaths.training02}
+                src={imagePaths.briefing}
                 alt="稼働開始前に配送業務の進め方を確認するJUNGLEのスタッフ"
                 fallbackLabel="TRAINING"
                 className="mt-10 hidden aspect-4/3 w-full lg:block"

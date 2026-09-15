@@ -13,7 +13,7 @@ import { faqsByIds } from '@/data/faq';
 import { applicationSteps } from '@/data/process';
 
 export const metadata: Metadata = buildMetadata({
-  title: '未経験の方へ｜軽貨物ドライバーの始め方',
+  title: '未経験の方へ｜必要な免許・研修・車両のサポート',
   description:
     '配送の経験がない方に向けて、軽貨物ドライバーを始めるまでの流れを解説します。必要な免許、研修の進め方、車両の用意、始めてからの不安への向き合い方をまとめました。',
   path: '/beginner',
@@ -102,7 +102,7 @@ export default function BeginnerPage() {
           </>
         }
         lead="必要なのは普通自動車運転免許だけです。何から手をつければいいか分からない、という段階からのご相談も歓迎しています。"
-        image={imagePaths.training01}
+        image={imagePaths.training}
         imageAlt="先輩ドライバーから配送の進め方について説明を受けるスタッフ"
       />
       <Breadcrumbs crumbs={crumbs} />
@@ -177,7 +177,7 @@ export default function BeginnerPage() {
               </NoteBlock>
             </div>
             <Photo
-              src={imagePaths.training02}
+              src={imagePaths.briefing}
               alt="研修中に業務の流れを書類で確認するJUNGLEのスタッフ"
               fallbackLabel="TRAINING"
               className="aspect-4/5 w-full"

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Logo } from '@/components/ui/Logo';
-import { company } from '@/data/company';
+import { formattedAddress } from '@/data/company';
 import { footerNav, siteConfig, socialLinks } from '@/data/site';
 
 /**
@@ -9,7 +9,7 @@ import { footerNav, siteConfig, socialLinks } from '@/data/site';
  */
 export function Footer() {
   const year = new Date().getFullYear();
-  const hasAddress = Boolean(company.address.postalCode || company.address.street);
+  const address = formattedAddress();
 
   return (
     <footer className="bg-ink text-white">
@@ -18,7 +18,7 @@ export function Footer() {
           {/* ブランド */}
           <div>
             <Link href="/" className="inline-block" aria-label={`${siteConfig.name} トップページ`}>
-              <Logo className="h-8" width={340} height={90} />
+              <Logo className="h-11" width={800} height={210} tone="dark" />
             </Link>
             <p className="mt-6 max-w-sm text-sm leading-7 text-white/65">
               兵庫県明石市・神戸市西部エリアを中心に、宅配および企業配送を行う軽貨物配送のJUNGLE
@@ -30,15 +30,10 @@ export function Footer() {
                 <dt className="shrink-0 font-bold text-white/45">エリア</dt>
                 <dd>兵庫県（明石市・神戸市西部を中心に）</dd>
               </div>
-              {hasAddress && (
+              {address && (
                 <div className="flex gap-3">
                   <dt className="shrink-0 font-bold text-white/45">所在地</dt>
-                  <dd>
-                    {company.address.postalCode && `〒${company.address.postalCode} `}
-                    {company.address.region}
-                    {company.address.locality}
-                    {company.address.isStreetPublic && company.address.street}
-                  </dd>
+                  <dd>{address}</dd>
                 </div>
               )}
               {socialLinks.tel && (
@@ -78,7 +73,7 @@ export function Footer() {
           </div>
 
           {/* ナビゲーション */}
-          <div className="grid gap-10 sm:grid-cols-3">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {footerNav.map((group) => (
               <nav key={group.heading} aria-label={group.heading}>
                 {/* 日本語の見出しなので、英字用のディスプレイ書体は使いません */}

@@ -7,6 +7,13 @@ import type { Column } from '../columns';
 export const basicsColumns: Column[] = [
   {
     slug: 'light-cargo-driver-job-description',
+    primaryKeyword: '軽貨物ドライバー 仕事内容',
+    secondaryKeywords: ['軽貨物配送 仕事の流れ', '軽貨物 宅配 企業配送 違い'],
+    searchIntent: '軽貨物ドライバーが具体的に何をする仕事なのかを知りたい（業界一般の情報）',
+    verifiedFacts: [
+      'JUNGLEは明石・神戸西エリアで宅配と企業配送の両方を扱っている',
+      'JUNGLEの募集は業務委託契約で、日当保証と同乗研修がある',
+    ],
     title: '軽貨物ドライバーの仕事内容とは｜1日の業務を具体的に解説',
     description:
       '軽貨物ドライバーの仕事内容を、荷物の積み込みから配達完了までの流れに沿って解説します。宅配と企業配送の違い、必要なスキル、向いている人の特徴まで具体的に紹介します。',
@@ -108,6 +115,12 @@ export const basicsColumns: Column[] = [
 
   {
     slug: 'start-as-beginner-driver',
+    primaryKeyword: '軽貨物ドライバー 未経験 始め方',
+    secondaryKeywords: ['軽貨物 開業 流れ', '軽貨物ドライバー なるには'],
+    searchIntent: '未経験から軽貨物ドライバーになるまでの手順を知りたい（業界一般の情報）',
+    verifiedFacts: [
+      'JUNGLEには車両リース制度がある',
+    ],
     title: '未経験から軽貨物ドライバーを始める流れ｜準備することを順番に解説',
     description:
       '配送の経験がない状態から軽貨物ドライバーを始めるまでの流れを、応募・面談・契約・車両準備・研修の順に解説します。未経験者がつまずきやすいポイントも紹介します。',
@@ -218,6 +231,12 @@ export const basicsColumns: Column[] = [
 
   {
     slug: 'contractor-driver-explained',
+    primaryKeyword: '業務委託ドライバー とは',
+    secondaryKeywords: ['業務委託 雇用 違い ドライバー', '軽貨物 業務委託 注意点'],
+    searchIntent: '業務委託契約の仕組みと雇用との違いを知りたい（業界一般の情報）',
+    verifiedFacts: [
+      'JUNGLEの軽貨物ドライバー募集は業務委託契約である',
+    ],
     title: '業務委託ドライバーとは｜雇用との違いと契約前に確認すべきこと',
     description:
       '軽貨物配送で一般的な業務委託契約について、雇用契約との違い、メリットと注意点、契約前に必ず確認すべき項目を解説します。個人事業主として働く仕組みを整理します。',
@@ -324,6 +343,13 @@ export const basicsColumns: Column[] = [
 
   {
     slug: 'required-license-for-light-cargo',
+    primaryKeyword: '軽貨物ドライバー 必要な免許',
+    secondaryKeywords: ['軽貨物 普通免許', '軽貨物 AT限定', '黒ナンバー 取得'],
+    searchIntent: '軽貨物ドライバーに必要な免許・資格を確認したい（業界一般の情報）',
+    verifiedFacts: [
+      'JUNGLEの応募条件は普通自動車運転免許のみ',
+      'JUNGLEの応募フォームにAT限定かどうかの選択項目がある',
+    ],
     title: '軽貨物ドライバーに必要な免許｜普通免許だけで始められる理由',
     description:
       '軽貨物ドライバーに必要な免許を解説します。普通自動車免許で始められる理由、AT限定でも可能かどうか、黒ナンバー登録との関係まで整理します。',

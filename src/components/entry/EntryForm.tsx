@@ -13,6 +13,7 @@ import {
   workDaysOptions,
 } from '@/lib/entry-schema';
 import { socialLinks } from '@/data/site';
+import { trackEvent } from '@/lib/analytics';
 
 type FieldErrors = Record<string, string>;
 
@@ -62,6 +63,14 @@ export function EntryForm() {
   const [formError, setFormError] = useState<string | null>(null);
   const [missingEnv, setMissingEnv] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
+  const [started, setStarted] = useState(false);
+
+  /** 入力開始を1度だけ計測します */
+  const handleFirstInput = () => {
+    if (started) return;
+    setStarted(true);
+    trackEvent('entry_form_start');
+  };
 
   const fid = (name: string) => `${formId}-${name}`;
   const describedBy = (name: string) => (errors[name] ? `${fid(name)}-error` : undefined);
@@ -111,6 +120,7 @@ export function EntryForm() {
         return;
       }
 
+      trackEvent('entry_form_submit');
       // 送信が成功したときのみ完了ページへ遷移します
       router.push('/entry/thanks');
     } catch {
@@ -122,7 +132,7 @@ export function EntryForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-8">
+    <form onSubmit={handleSubmit} onInput={handleFirstInput} noValidate className="space-y-8">
       {/* -------------------------- 送信結果のメッセージ -------------------------- */}
       <div id="entry-form-status" aria-live="polite">
         {formError && (

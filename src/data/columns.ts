@@ -38,6 +38,17 @@ export type Column = {
   updatedAt: string;
   /** リード文（記事冒頭・一覧カードに表示） */
   lead: string;
+  /** 主軸キーワード（1記事1クエリで設計する） */
+  primaryKeyword: string;
+  /** 補助キーワード */
+  secondaryKeywords: string[];
+  /** 検索意図。固定ページとの役割分担を明確にするために記録します */
+  searchIntent: string;
+  /**
+   * 記事内でJUNGLE固有の事実として書いている内容。
+   * 一般論と自社情報を区別するための記録です。
+   */
+  verifiedFacts: string[];
   blocks: ColumnBlock[];
   /** 記事末尾に表示するFAQ（src/data/faq.ts の id） */
   faqIds: string[];
@@ -47,13 +58,19 @@ export type Column = {
   relatedSlugs: string[];
 };
 
-/** 記事の監修・運営者情報（E-E-A-T） */
+/**
+ * 記事の執筆・確認体制（E-E-A-T）。
+ * 確認できない経歴は作らず、実際に行っていることだけを書いてください。
+ */
 export const columnAuthor = {
   name: 'JUNGLE TRANSPORT 採用担当',
   role: '軽貨物配送事業 採用担当',
   description:
-    '兵庫県明石市・神戸市西部エリアで軽貨物配送を行うJUNGLE TRANSPORTの採用担当です。宅配・企業配送の現場で実際に稼働しているドライバーの声をもとに、これから軽貨物ドライバーを目指す方に向けた情報を発信しています。',
-  url: '/about',
+    '兵庫県明石市・神戸市西区で軽貨物配送を行うJUNGLE TRANSPORTの採用担当です。宅配・企業配送の現場で実際に稼働しているドライバーの声と、応募者から実際にいただく質問をもとに記事を作成しています。',
+  /** 著者ページのURL */
+  url: '/authors/jungle-recruitment',
+  /** 記事内容の確認者 */
+  reviewedBy: 'JUNGLE TRANSPORT 運営',
 } as const;
 
 export const columns: Column[] = [...basicsColumns, ...practicalColumns];

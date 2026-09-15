@@ -20,7 +20,7 @@ import { openJobs } from '@/data/jobs';
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: '求人一覧｜兵庫の軽貨物ドライバー募集',
+  title: '軽貨物ドライバー求人一覧｜兵庫県明石市・神戸市西区',
   description:
     'JUNGLEが現在募集している求人の一覧です。兵庫県明石市・神戸市西部エリアの軽貨物ドライバー求人を掲載しています。募集中の求人のみを表示しています。',
   path: '/jobs',
@@ -43,7 +43,7 @@ export default function JobsPage() {
         eyebrow="Jobs"
         title="募集中の求人一覧"
         lead="現在募集している求人のみを掲載しています。募集を終了した求人は一覧から削除されます。"
-        image={imagePaths.deliveryPair}
+        image={imagePaths.driversCheck}
         imageAlt="車両後部で荷物を確認するJUNGLEのドライバー2人"
       />
       <Breadcrumbs crumbs={crumbs} />

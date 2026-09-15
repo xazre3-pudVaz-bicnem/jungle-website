@@ -5,7 +5,9 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { MobileCta } from '@/components/layout/MobileCta';
 import { JsonLd } from '@/components/ui/JsonLd';
-import { organizationJsonLd, websiteJsonLd } from '@/lib/jsonld';
+import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
+import { OutboundTracker } from '@/components/analytics/OutboundTracker';
+import { localBusinessJsonLd, organizationJsonLd } from '@/lib/structured-data';
 import { siteConfig } from '@/data/site';
 
 const notoSansJp = Noto_Sans_JP({
@@ -48,7 +50,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja" className={`${notoSansJp.variable} ${anton.variable}`}>
       <body className="font-sans antialiased">
-        <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
+        {/*
+          Organization は publisher / provider の @id 参照を解決するため全ページに出力します。
+          WebSite はトップページにのみ出力します（サイト全体を表す情報のため）。
+          LocalBusiness は番地まで確認できた住所がある場合のみ出力されます。
+        */}
+        <JsonLd data={[organizationJsonLd(), localBusinessJsonLd()]} />
+        <GoogleAnalytics />
+        <OutboundTracker />
         <Header />
         <main id="main" className="pb-14 lg:pb-0">
           {children}

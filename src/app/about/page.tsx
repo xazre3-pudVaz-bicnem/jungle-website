@@ -60,7 +60,7 @@ export default function AboutPage() {
           </>
         }
         lead="JUNGLEは兵庫県明石市・神戸市西部エリアで軽貨物配送を行っています。ここでは、どのような考え方で事業と採用に取り組んでいるかをお伝えします。"
-        image={imagePaths.team02}
+        image={imagePaths.teamVans}
         imageAlt="軽貨物車両の前に並ぶJUNGLEのドライバーたち"
       />
       <Breadcrumbs crumbs={crumbs} />

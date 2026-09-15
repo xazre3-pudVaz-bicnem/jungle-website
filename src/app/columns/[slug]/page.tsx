@@ -9,7 +9,7 @@ import { ColumnBody } from '@/components/ui/ColumnBody';
 import { JsonLd } from '@/components/ui/JsonLd';
 import { EntryCta } from '@/components/sections/EntryCta';
 import { buildMetadata } from '@/lib/seo';
-import { articleJsonLd, breadcrumbJsonLd, faqPageJsonLd, type Crumb } from '@/lib/jsonld';
+import { articleJsonLd, breadcrumbJsonLd, faqItemsToJsonLd, webPageJsonLd, type Crumb } from '@/lib/structured-data';
 import { formatJapaneseDate } from '@/lib/format';
 import { columnAuthor, columns, getColumn, relatedColumns } from '@/data/columns';
 import { faqsByIds } from '@/data/faq';
@@ -59,7 +59,13 @@ export default async function ColumnDetailPage({ params }: { params: Promise<{ s
         data={[
           breadcrumbJsonLd(crumbs),
           articleJsonLd(column),
-          ...(faqItems.length ? [faqPageJsonLd(faqItems)] : []),
+          faqItemsToJsonLd(faqItems),
+          webPageJsonLd({
+            name: column.title,
+            description: column.description,
+            path: `/columns/${column.slug}`,
+            updatedAt: column.updatedAt,
+          }),
         ]}
       />
 
@@ -70,7 +76,7 @@ export default async function ColumnDetailPage({ params }: { params: Promise<{ s
         <Container>
           <div className="grid gap-16 lg:grid-cols-[1.7fr_1fr] lg:gap-20">
             {/* -------------------------------- 本文 -------------------------------- */}
-            <article>
+            <article className="min-w-0">
               <div className="flex flex-wrap items-center gap-x-8 gap-y-2 border-b border-line pb-6 text-xs text-body/60">
                 <span>
                   公開日：
@@ -103,8 +109,33 @@ export default async function ColumnDetailPage({ params }: { params: Promise<{ s
                 <p className="mt-4 text-base font-bold text-ink">{columnAuthor.name}</p>
                 <p className="mt-1 text-xs text-body/60">{columnAuthor.role}</p>
                 <p className="mt-4 text-sm leading-8 text-body">{columnAuthor.description}</p>
+                <dl className="mt-6 grid gap-2 text-xs text-body/70 sm:grid-cols-2">
+                  <div className="flex gap-3">
+                    <dt className="font-bold">記事の確認者</dt>
+                    <dd>{columnAuthor.reviewedBy}</dd>
+                  </div>
+                  <div className="flex gap-3">
+                    <dt className="font-bold">最終更新日</dt>
+                    <dd>
+                      <time dateTime={column.updatedAt}>{formatJapaneseDate(column.updatedAt)}</time>
+                    </dd>
+                  </div>
+                </dl>
+                {column.verifiedFacts.length > 0 && (
+                  <div className="mt-6 border-l-4 border-jungle bg-mist px-5 py-4">
+                    <p className="text-xs font-bold text-ink">この記事でJUNGLEの事実として記載している内容</p>
+                    <ul className="mt-2.5 space-y-1.5">
+                      {column.verifiedFacts.map((fact) => (
+                        <li key={fact} className="text-xs leading-6 text-body">・{fact}</li>
+                      ))}
+                    </ul>
+                    <p className="mt-3 text-xs leading-6 text-body/60">
+                      上記以外は軽貨物配送の一般的な情報です。
+                    </p>
+                  </div>
+                )}
                 <TextLink href={columnAuthor.url} className="mt-6">
-                  JUNGLEについて
+                  運営者情報を見る
                 </TextLink>
               </section>
 

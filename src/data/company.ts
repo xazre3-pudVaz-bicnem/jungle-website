@@ -1,91 +1,113 @@
 /**
- * 会社情報。
+ * 会社情報の一元管理ファイル。
  *
- * ■ 重要なルール
- * value が null の項目は「未確認」を意味し、画面には一切表示されません。
- * 推測値・ダミー値を入れないでください。判明した時点で value を埋めれば、
- * 会社概要ページ・フッター・構造化データすべてに自動反映されます。
+ * ■ 基本ルール
+ *   すべての項目を { value, verified, todo } の形で持ちます。
+ *   - verified: false または value: null の項目は、画面にも構造化データにも一切出力されません。
+ *   - 推測値・ダミー値を絶対に入れないでください。
+ *   - 判明した時点で value を埋めて verified: true にすれば、会社概要・フッター・
+ *     求人詳細・構造化データすべてに自動反映されます。
+ *
+ * ■ 未確認項目の確認先
+ *   README の「オーナーへ確認が必要な情報」に一覧化しています。
  */
 
-export type CompanyField = {
-  /** 会社概要テーブルの項目名 */
-  label: string;
-  /** 未確認の場合は null（画面に出さない） */
+export type Field = {
+  /** 未確認の場合は null */
   value: string | null;
-  /** 補足説明（任意） */
-  note?: string;
+  /** 事実確認が取れているか。false の間は公開画面に出しません */
+  verified: boolean;
+  /** 未確認の場合の確認事項 */
+  todo?: string;
 };
 
+const unverified = (todo: string): Field => ({ value: null, verified: false, todo });
+const confirmed = (value: string): Field => ({ value, verified: true });
+
+/** 表示してよい値だけを取り出す。未確認なら null を返します */
+export const show = (field: Field): string | null => (field.verified && field.value ? field.value : null);
+
 export const company = {
-  /** 屋号・ブランド名（ロゴ表記より確認済み） */
-  name: 'JUNGLE TRANSPORT',
-  /** 正式名称（確認済み）。ロゴ表記の「JUNGLE TRANSPORT」はブランド表記として併用します */
-  legalName: 'JUNGLE' as string | null,
-  /** 事業拠点エリア（Instagramプロフィール「📍兵庫エリア」より） */
-  areaLabel: '兵庫エリア',
-  /** 主たる営業エリア（Instagram求人投稿「明石・神戸西エリア」より） */
-  primaryArea: '明石・神戸西エリア',
+  /** ブランド表記（ロゴ表記より確認済み） */
+  brandName: confirmed('JUNGLE TRANSPORT'),
+  /** 正式名称（オーナー確認済み） */
+  legalName: confirmed('JUNGLE'),
+  /** 屋号 */
+  tradeName: confirmed('JUNGLE TRANSPORT'),
 
-  /**
-   * 住所。すべて未確認のため null。
-   * 判明したら埋めることで、会社概要ページとJobPostingのjobLocationに反映されます。
-   */
-  address: {
-    postalCode: null as string | null,
-    region: '兵庫県',
-    locality: '明石市',
-    street: null as string | null,
-    /** 番地まで公開してよいかが未確認のため、市区町村までを構造化データに使用 */
-    isStreetPublic: false,
-  },
+  representative: unverified('代表者名。会社概要とOrganization構造化データに使用します'),
+  postalCode: unverified('本店所在地の郵便番号'),
+  /** 所在地（オーナー確認済み・公開可） */
+  addressRegion: confirmed('兵庫県'),
+  addressLocality: confirmed('神戸市西区'),
+  streetAddress: confirmed('玉津町出合44-1'),
 
-  /** TODO: 代表者名が未確認 */
-  representative: null as string | null,
-  /** TODO: 設立年月が未確認 */
-  founded: null as string | null,
-  /** TODO: 資本金が未確認 */
-  capital: null as string | null,
-  /** TODO: 従業員数・稼働ドライバー数が未確認 */
-  employees: null as string | null,
-  /** TODO: 貨物軽自動車運送事業の届出番号が未確認 */
-  licenseNumber: null as string | null,
+  tel: confirmed('090-7756-2400'),
+  telHours: unverified('電話の受付時間（例: 9:00〜18:00）'),
+  email: confirmed('ex.jsb.seco24@icloud.com'),
+
+  founded: unverified('設立年月'),
+  capital: unverified('資本金'),
+  employees: unverified('稼働ドライバー数・従業員数'),
+  licenseNumber: unverified('貨物軽自動車運送事業の届出番号（届出年月日と運輸支局名を含む）'),
+  corporateNumber: unverified('法人番号（法人の場合）。個人事業の場合はその旨'),
+
+  /** 事業内容（Instagramプロフィールで確認済み） */
+  businessSummary: confirmed('軽貨物配送（個人宅向け宅配・企業向け配送）／引越し／遺品回収／不動産関連業務'),
+  /** 稼働エリア（Instagram求人投稿で確認済み） */
+  serviceArea: confirmed('兵庫県明石市・神戸市西部を中心とした地域'),
 } as const;
 
-/**
- * 会社概要ページのテーブル。
- * value が null の行は自動的に非表示になります。
- */
-export const companyProfileRows: CompanyField[] = [
-  { label: '正式名称', value: company.legalName },
-  { label: 'ブランド表記', value: company.name, note: 'ロゴ・サイト上の表記' },
-  { label: '代表者', value: company.representative },
-  { label: '所在地', value: null, note: '公開情報が確認でき次第掲載します' },
-  { label: '電話番号', value: '090-7756-2400', note: '配送のご依頼・採用のお問い合わせを承ります' },
-  { label: '設立', value: company.founded },
-  { label: '資本金', value: company.capital },
-  {
-    label: '事業内容',
-    value: '軽貨物配送（宅配・企業配送）／不動産関連業務／引越し／遺品回収 ほか',
-    note: 'Instagramプロフィール記載の事業内容にもとづきます',
-  },
-  { label: '主な稼働エリア', value: '兵庫県（明石市・神戸市西部を中心に）' },
-  { label: '従業員数', value: company.employees },
-  { label: '貨物軽自動車運送事業 届出番号', value: company.licenseNumber },
-  { label: 'お問い合わせ', value: 'お電話／Instagram ダイレクトメッセージ／当サイトの応募フォーム' },
-];
+/** 住所を1行にまとめる。未確認部分は出力しません */
+export function formattedAddress(): string | null {
+  const region = show(company.addressRegion);
+  const locality = show(company.addressLocality);
+  if (!region || !locality) return null;
+  const postal = show(company.postalCode);
+  const street = show(company.streetAddress);
+  return `${postal ? `〒${postal} ` : ''}${region}${locality}${street ?? ''}`;
+}
 
 /**
- * 未確認情報の一覧。
- * /company ページと README に反映され、運用者が埋めるべき項目が一目で分かります。
+ * LocalBusiness 構造化データを出力してよいか。
+ * 番地まで確認できた住所がないと、Googleのローカル検索では逆効果になるため、
+ * streetAddress が確認できるまで false のままにします。
  */
-export const companyTodos = [
-  '本店所在地・郵便番号',
-  '代表者名',
-  '設立年月',
-  '資本金',
-  '稼働ドライバー数・従業員数',
-  '貨物軽自動車運送事業の届出番号',
-  '公開可能な問い合わせメールアドレス',
-  '公式LINEアカウントの有無とURL',
-  '電話の受付時間',
-] as const;
+export const canPublishLocalBusiness = () => Boolean(show(company.streetAddress));
+
+/* -------------------------- 会社概要ページのテーブル -------------------------- */
+
+export type CompanyRow = { label: string; value: string | null; note?: string };
+
+/** value が null の行は自動的に非表示になります */
+export const companyProfileRows = (): CompanyRow[] =>
+  [
+    { label: '正式名称', value: show(company.legalName) },
+    { label: 'ブランド表記', value: show(company.brandName), note: 'ロゴ・サイト上の表記' },
+    { label: '代表者', value: show(company.representative) },
+    { label: '所在地', value: formattedAddress() },
+    { label: '電話番号', value: show(company.tel), note: '配送のご依頼・採用のお問い合わせを承ります' },
+    { label: '受付時間', value: show(company.telHours) },
+    { label: 'メールアドレス', value: show(company.email) },
+    { label: '設立', value: show(company.founded) },
+    { label: '資本金', value: show(company.capital) },
+    { label: '事業内容', value: show(company.businessSummary) },
+    { label: '主な稼働エリア', value: show(company.serviceArea) },
+    { label: '従業員数', value: show(company.employees) },
+    { label: '貨物軽自動車運送事業 届出番号', value: show(company.licenseNumber) },
+    { label: '法人番号', value: show(company.corporateNumber) },
+    {
+      label: 'お問い合わせ',
+      value: 'お電話／Instagram ダイレクトメッセージ／当サイトの各種フォーム',
+    },
+  ].filter((row) => row.value !== null) as CompanyRow[];
+
+/**
+ * 未確認項目の一覧。会社概要ページと README に反映されます。
+ * company の各フィールドから自動生成するため、値を埋めれば自動的に消えます。
+ */
+export const companyTodos = (): string[] =>
+  Object.values(company)
+    .filter((f): f is Field => typeof f === 'object' && f !== null && 'verified' in f)
+    .filter((f) => !f.verified && f.todo)
+    .map((f) => f.todo as string);

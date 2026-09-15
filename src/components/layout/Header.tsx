@@ -57,12 +57,9 @@ export function Header() {
         }`}
       >
         <div className="mx-auto flex h-16 w-full max-w-[88rem] items-center justify-between px-5 sm:h-20 sm:px-8">
-          {/*
-            ロゴは背景が白のJPGのため、白い下地の中に収めています。
-            ヘッダーが白のときは下地が背景に溶け込み、透過時は白いチップとして見えます。
-          */}
+          {/* ロゴは透過済み。ヘッダーが透過（暗いヒーローの上）のときは白抜き版に切り替えます */}
           <Link href="/" className="flex items-center" aria-label={`${siteConfig.name} トップページ`}>
-            <Logo className="h-6 sm:h-7" width={340} height={90} priority />
+            <Logo className="h-8 sm:h-10" width={800} height={210} tone={solid ? 'light' : 'dark'} priority />
             <span className="sr-only">{siteConfig.name}</span>
           </Link>
 

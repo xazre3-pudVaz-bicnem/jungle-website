@@ -1,19 +1,19 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Container, Section, SectionHeading, ButtonLink, TextLink, NumberMark, NoteBlock } from '@/components/ui/Primitives';
+import { Container, Section, SectionHeading, ButtonLink, TextLink, NumberMark } from '@/components/ui/Primitives';
 import { PageHero } from '@/components/ui/PageHero';
 import { Photo } from '@/components/ui/Photo';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { JsonLd } from '@/components/ui/JsonLd';
 import { EntryCta } from '@/components/sections/EntryCta';
 import { buildMetadata } from '@/lib/seo';
-import { breadcrumbJsonLd, organizationJsonLd, serviceJsonLd, type Crumb } from '@/lib/jsonld';
+import { breadcrumbJsonLd, serviceJsonLd, type Crumb } from '@/lib/structured-data';
 import { imagePaths } from '@/lib/images';
 import { services, qualityPolicies } from '@/data/services';
 import { socialLinks } from '@/data/site';
 
 export const metadata: Metadata = buildMetadata({
-  title: '事業内容｜兵庫・明石の軽貨物配送',
+  title: '事業内容｜明石・神戸西の軽貨物配送会社',
   description:
     'JUNGLEの事業内容をご紹介します。兵庫県明石市・神戸市西部エリアでの個人宅向け宅配、企業配送を中心に、引越し・遺品回収などの運搬業務にも対応しています。',
   path: '/service',
@@ -33,8 +33,9 @@ export default function ServicePage() {
       <JsonLd
         data={[
           breadcrumbJsonLd(crumbs),
-          organizationJsonLd(),
-          ...serviceJsonLd(services.map((s) => ({ name: s.name, description: s.description }))),
+          ...services.map((s) =>
+            serviceJsonLd({ name: s.name, description: s.description, path: s.path ?? '/service' }),
+          ),
         ]}
       />
 
@@ -42,7 +43,7 @@ export default function ServicePage() {
         eyebrow="Service"
         title="兵庫県で「運ぶ」を担う。"
         lead="JUNGLEは兵庫県明石市・神戸市西部エリアを中心に、軽貨物配送を行っています。個人宅への宅配から企業配送まで、地域の物流を支える仕事です。"
-        image={imagePaths.heroSunset}
+        image={imagePaths.bridgeVans}
         imageAlt="夕景の明石海峡大橋を背に並ぶJUNGLEの軽貨物車両"
       />
       <Breadcrumbs crumbs={crumbs} />
@@ -60,7 +61,7 @@ export default function ServicePage() {
             {primaryServices.map((service, index) => (
               <article key={service.id} className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center lg:gap-16">
                 <Photo
-                  src={index === 0 ? imagePaths.delivery01 : imagePaths.depot01}
+                  src={index === 0 ? imagePaths.handoverSenior : imagePaths.businessWarehouse}
                   alt={
                     index === 0
                       ? '個人宅の玄関先で荷物をお届けするJUNGLEのドライバー'
@@ -72,7 +73,15 @@ export default function ServicePage() {
                 />
                 <div>
                   <p className="display text-xs tracking-[0.22em] text-jungle-deep">{service.eyebrow}</p>
-                  <h3 className="mt-4 text-2xl leading-relaxed font-bold text-ink sm:text-3xl">{service.name}</h3>
+                  <h3 className="mt-4 text-2xl leading-relaxed font-bold text-ink sm:text-3xl">
+                    {service.hasDetailPage ? (
+                      <Link href={service.path} className="hover:text-jungle-deep">
+                        {service.name}
+                      </Link>
+                    ) : (
+                      service.name
+                    )}
+                  </h3>
                   <p className="mt-6 text-[0.9375rem] leading-8 text-body">{service.description}</p>
                   <ul className="mt-7 space-y-3">
                     {service.points.map((point) => (
@@ -82,6 +91,11 @@ export default function ServicePage() {
                       </li>
                     ))}
                   </ul>
+                  {service.hasDetailPage && (
+                    <TextLink href={service.path} className="mt-7">
+                      {service.name}の詳細を見る
+                    </TextLink>
+                  )}
                 </div>
               </article>
             ))}
@@ -183,19 +197,22 @@ export default function ServicePage() {
                 法人・事業者のお客様からの配送のご依頼、継続的な配送業務の受託についてのご相談を承っています。
                 対応可能な範囲や条件については個別にご相談ください。
               </p>
-              <NoteBlock>
-                現在、法人のお客様からのご相談はInstagramのダイレクトメッセージにて受け付けています。
-                公開可能な電話番号・メールアドレスが確認でき次第、こちらに掲載します。
-              </NoteBlock>
-              <ButtonLink
-                href={socialLinks.instagram}
-                variant="ink"
-                external
-                className="mt-6 w-full"
-                ariaLabel="Instagramのダイレクトメッセージで配送について相談する"
-              >
-                Instagramから相談する
-              </ButtonLink>
+              <div className="mt-6 space-y-3">
+                <ButtonLink href="/contact/business" variant="ink" className="w-full">
+                  法人向け問い合わせフォームへ
+                </ButtonLink>
+                {socialLinks.tel && (
+                  <ButtonLink
+                    href={`tel:${socialLinks.tel.replace(/-/g, "")}`}
+                    variant="outline"
+                    external
+                    className="w-full"
+                    ariaLabel={`電話で相談する ${socialLinks.tel}`}
+                  >
+                    お電話（{socialLinks.tel}）
+                  </ButtonLink>
+                )}
+              </div>
             </div>
 
             {/* ドライバー募集 */}

@@ -12,7 +12,7 @@ import { imagePaths } from '@/lib/images';
 import { faqsByIds } from '@/data/faq';
 
 export const metadata: Metadata = buildMetadata({
-  title: '兵庫の軽貨物ドライバーの仕事内容',
+  title: '明石・神戸西の軽貨物ドライバーの仕事内容',
   description:
     '兵庫県明石市・神戸市西部エリアで働く軽貨物ドライバーの仕事内容を解説します。宅配と企業配送の違い、配送の流れ、使用車両、扱う荷物、担当エリアをまとめました。',
   path: '/work',
@@ -35,7 +35,7 @@ const deliveryTypes = [
       '時間指定のある荷物を優先した順路の組み立て',
       '不在時の再配達・置き配指定への対応',
     ],
-    image: imagePaths.driver01,
+    image: imagePaths.homeDelivery,
     alt: '個人宅の玄関先で荷物をお届けするJUNGLEのドライバー',
   },
   {
@@ -47,7 +47,7 @@ const deliveryTypes = [
       '到着時間の指定がある配送への対応',
       '訪問先が固定されるため関係を築きやすい',
     ],
-    image: imagePaths.depot01,
+    image: imagePaths.businessWarehouse,
     alt: '配送拠点で企業向けの荷物を仕分けするJUNGLEのスタッフ',
   },
 ];
@@ -92,7 +92,7 @@ export default function WorkPage() {
           </>
         }
         lead="兵庫県明石市・神戸市西部エリアで働く軽貨物ドライバーの仕事を、扱う荷物・使用する車両・配送の流れに沿ってご説明します。"
-        image={imagePaths.van01}
+        image={imagePaths.vanAkashiStreet}
         imageAlt="配送業務に使用しているJUNGLEの軽バン"
       />
       <Breadcrumbs crumbs={crumbs} />
