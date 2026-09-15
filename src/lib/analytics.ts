@@ -10,8 +10,6 @@
  *   entry_form_submit      応募フォームの送信完了
  *   tel_tap                電話番号のタップ
  *   instagram_tap          Instagramリンクのタップ
- *   business_contact_start 法人問い合わせフォームの入力開始
- *   business_contact_submit 法人問い合わせフォームの送信完了
  *   job_to_entry           求人ページから応募フォームへの遷移
  *   column_to_job          コラムから求人ページへの遷移
  */
@@ -22,8 +20,6 @@ export type AnalyticsEvent =
   | 'entry_form_submit'
   | 'tel_tap'
   | 'instagram_tap'
-  | 'business_contact_start'
-  | 'business_contact_submit'
   | 'job_to_entry'
   | 'column_to_job';
 

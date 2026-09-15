@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: '*',
         allow: '/',
         // 送信完了ページとAPIは検索結果に出す必要がありません
-        disallow: ['/entry/thanks', '/contact/business/thanks', '/api/'],
+        disallow: ['/entry/thanks', '/api/'],
       },
     ],
     sitemap: `${siteConfig.url}/sitemap.xml`,

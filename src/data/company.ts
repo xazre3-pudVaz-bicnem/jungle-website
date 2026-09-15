@@ -44,7 +44,6 @@ export const company = {
 
   tel: confirmed('090-7756-2400'),
   telHours: unverified('電話の受付時間（例: 9:00〜18:00）'),
-  email: confirmed('ex.jsb.seco24@icloud.com'),
 
   founded: unverified('設立年月'),
   capital: unverified('資本金'),
@@ -88,7 +87,6 @@ export const companyProfileRows = (): CompanyRow[] =>
     { label: '所在地', value: formattedAddress() },
     { label: '電話番号', value: show(company.tel), note: '配送のご依頼・採用のお問い合わせを承ります' },
     { label: '受付時間', value: show(company.telHours) },
-    { label: 'メールアドレス', value: show(company.email) },
     { label: '設立', value: show(company.founded) },
     { label: '資本金', value: show(company.capital) },
     { label: '事業内容', value: show(company.businessSummary) },
@@ -98,7 +96,7 @@ export const companyProfileRows = (): CompanyRow[] =>
     { label: '法人番号', value: show(company.corporateNumber) },
     {
       label: 'お問い合わせ',
-      value: 'お電話／Instagram ダイレクトメッセージ／当サイトの各種フォーム',
+      value: 'お電話／Instagram ダイレクトメッセージ（ドライバー応募は当サイトの応募フォーム）',
     },
   ].filter((row) => row.value !== null) as CompanyRow[];
 

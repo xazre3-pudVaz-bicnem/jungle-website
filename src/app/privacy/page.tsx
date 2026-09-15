@@ -147,16 +147,6 @@ export default function PrivacyPage() {
                   <dt className="text-sm font-bold text-ink">名称</dt>
                   <dd className="text-sm leading-7 text-body">{show(company.brandName) ?? 'JUNGLE TRANSPORT'}</dd>
                 </div>
-                {socialLinks.email && (
-                  <div className="grid gap-2 py-5 sm:grid-cols-[9rem_1fr] sm:gap-8">
-                    <dt className="text-sm font-bold text-ink">メールアドレス</dt>
-                    <dd className="text-sm leading-7 text-body">
-                      <a href={`mailto:${socialLinks.email}`} className="link-underline font-bold text-ink">
-                        {socialLinks.email}
-                      </a>
-                    </dd>
-                  </div>
-                )}
                 {socialLinks.tel && (
                   <div className="grid gap-2 py-5 sm:grid-cols-[9rem_1fr] sm:gap-8">
                     <dt className="text-sm font-bold text-ink">電話番号</dt>

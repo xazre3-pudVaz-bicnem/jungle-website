@@ -44,7 +44,7 @@ const staticRoutes: Route[] = [
   { path: '/area', updatedAt: '2026-08-02', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/work', updatedAt: '2026-08-02', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/beginner', updatedAt: '2026-08-02', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/contact/business', updatedAt: '2026-08-02', priority: 0.8, changeFrequency: 'monthly' },
+  { path: '/contact/business', updatedAt: '2026-09-15', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/entry', updatedAt: '2026-08-02', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/about', updatedAt: '2026-08-02', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/daily-flow', updatedAt: '2026-08-02', priority: 0.7, changeFrequency: 'monthly' },

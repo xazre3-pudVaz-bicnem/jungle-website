@@ -3,7 +3,6 @@ import { Container, Section, SectionHeading, NoteBlock, TextLink } from '@/compo
 import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { JsonLd } from '@/components/ui/JsonLd';
-import { BusinessContactForm } from '@/components/contact/BusinessContactForm';
 import { buildMetadata } from '@/lib/seo';
 import { breadcrumbJsonLd, webPageJsonLd, type Crumb } from '@/lib/structured-data';
 import { imagePaths } from '@/lib/images';
@@ -14,7 +13,7 @@ import { company, show } from '@/data/company';
 export const metadata: Metadata = buildMetadata({
   title: '配送のご依頼・法人向けお問い合わせ',
   description:
-    '兵庫県明石市・神戸市西区での軽貨物配送のご依頼を承ります。個人宅向け宅配・企業向け配送について、荷物の内容とエリアをお知らせください。対応可否をご回答します。',
+    '兵庫県明石市・神戸市西区での軽貨物配送のご依頼を承ります。個人宅向け宅配・企業向け配送について、お電話またはInstagramで荷物の内容とエリアをお知らせください。',
   path: '/contact/business',
 });
 
@@ -22,6 +21,14 @@ const crumbs: Crumb[] = [
   { name: 'ホーム', href: '/' },
   { name: '事業内容', href: '/service' },
   { name: '配送のご依頼', href: '/contact/business' },
+];
+
+/** ご相談時に伺う内容。先にまとめておいていただくと回答が早くなります */
+const checklist = [
+  { label: '荷物の種類', example: '段ボール・書類・部品など。おおよそのサイズと数量' },
+  { label: '集荷場所', example: '倉庫・店舗・事業所などの所在地' },
+  { label: '配送先エリア', example: '明石市内、神戸市西区など' },
+  { label: '頻度・時間帯', example: '毎日／週数回／スポット、到着時間の指定の有無' },
 ];
 
 export default function BusinessContactPage() {
@@ -37,7 +44,7 @@ export default function BusinessContactPage() {
             description:
               '兵庫県明石市・神戸市西区での軽貨物配送のご依頼を承る、法人・事業者向けのお問い合わせ窓口です。',
             path: '/contact/business',
-            updatedAt: '2026-08-02',
+            updatedAt: '2026-09-15',
           }),
         ]}
       />
@@ -45,7 +52,7 @@ export default function BusinessContactPage() {
       <PageHero
         eyebrow="For Business"
         title="配送のご依頼・ご相談"
-        lead="兵庫県明石市・神戸市西区での軽貨物配送を承っています。荷物の内容と配送先のエリアをお知らせいただければ、対応可否をご回答します。"
+        lead="兵庫県明石市・神戸市西区での軽貨物配送を承っています。お電話またはInstagramで荷物の内容と配送先のエリアをお知らせいただければ、対応可否をご回答します。"
         image={imagePaths.businessWarehouse}
         imageAlt="事業所で企業向けの荷物を仕分けするJUNGLE TRANSPORTのスタッフ"
       />
@@ -55,26 +62,59 @@ export default function BusinessContactPage() {
         <Container>
           <div className="grid gap-16 lg:grid-cols-[1.6fr_1fr] lg:gap-20">
             <div>
-              <SectionHeading eyebrow="Form" title="お問い合わせ内容の入力" as="h2" />
+              <SectionHeading eyebrow="Contact" title="お電話・Instagramでご相談ください" as="h2" />
               <p className="mt-6 text-sm leading-8 text-body">
-                「必須」の項目はすべてご記入ください。荷物の種類・集荷場所・配送先エリア・頻度をお知らせいただけますと、対応可否のご回答がスムーズです。
+                以下の内容をお伝えいただけますと、対応可否とお見積りのご回答がスムーズです。決まっていない項目があっても構いません。
               </p>
 
+              <dl className="rule-list mt-8 border-t border-line">
+                {checklist.map((item) => (
+                  <div key={item.label} className="grid gap-2 py-5 sm:grid-cols-[9rem_1fr] sm:gap-8">
+                    <dt className="text-sm font-bold text-ink">{item.label}</dt>
+                    <dd className="text-sm leading-7 text-body">{item.example}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              <div className="mt-10 bg-ink p-7 sm:p-10">
+                {tel && (
+                  <>
+                    <h3 className="text-base font-bold text-white">お電話でのご相談</h3>
+                    <a
+                      href={`tel:${tel.replace(/-/g, '')}`}
+                      className="mt-5 flex min-h-14 items-center justify-center bg-jungle text-lg font-bold text-ink transition-colors hover:bg-white"
+                      aria-label={`電話で相談する ${tel}`}
+                    >
+                      {tel}
+                    </a>
+                    {!show(company.telHours) && (
+                      <p className="mt-3 text-xs leading-6 text-white/50">
+                        ※ 受付時間は準備でき次第こちらに掲載します。
+                      </p>
+                    )}
+                  </>
+                )}
+                <a
+                  href={socialLinks.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 flex min-h-14 items-center justify-center border-2 border-white/60 text-base font-bold text-white transition-colors hover:bg-white hover:text-ink"
+                >
+                  InstagramのDMで相談する
+                </a>
+              </div>
+
               <div className="mt-8">
-                <NoteBlock title="このフォームは法人・事業者の方専用です">
-                  ドライバーとしての応募をご希望の方は、
+                <NoteBlock title="ドライバーとしての応募をご希望の方へ">
+                  こちらは配送のご依頼窓口です。ドライバーとしての応募は
                   <a
                     href="/entry"
                     className="font-bold text-ink underline decoration-jungle decoration-2 underline-offset-4"
                   >
                     応募フォーム
                   </a>
-                  からお願いします。窓口を分けているため、こちらから応募いただくとご連絡が遅くなる場合があります。
+                  からお願いします。
                 </NoteBlock>
-              </div>
-
-              <div className="mt-10">
-                <BusinessContactForm />
               </div>
             </div>
 
@@ -107,44 +147,6 @@ export default function BusinessContactPage() {
                   対応エリアの詳細を見る
                 </TextLink>
               </div>
-
-              {/* 電話 */}
-              {tel && (
-                <div className="bg-ink p-7">
-                  <h2 className="text-base font-bold text-white">お電話でのご相談</h2>
-                  <p className="mt-3 text-sm leading-7 text-white/70">
-                    お急ぎの場合はお電話ください。配送内容をお伺いします。
-                  </p>
-                  <a
-                    href={`tel:${tel.replace(/-/g, '')}`}
-                    className="mt-5 flex min-h-12 items-center justify-center bg-jungle text-base font-bold text-ink transition-colors hover:bg-white"
-                    aria-label={`電話で相談する ${tel}`}
-                  >
-                    {tel}
-                  </a>
-                  {!show(company.telHours) && (
-                    <p className="mt-3 text-xs leading-6 text-white/50">
-                      ※ 受付時間は準備でき次第こちらに掲載します。
-                    </p>
-                  )}
-                  {socialLinks.email && (
-                    <a
-                      href={`mailto:${socialLinks.email}`}
-                      className="mt-3 flex min-h-12 items-center justify-center border-2 border-white/60 px-3 text-center text-xs font-bold break-all text-white transition-colors hover:bg-white hover:text-ink sm:text-sm"
-                    >
-                      {socialLinks.email}
-                    </a>
-                  )}
-                  <a
-                    href={socialLinks.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 flex min-h-12 items-center justify-center border-2 border-white/60 text-sm font-bold text-white transition-colors hover:bg-white hover:text-ink"
-                  >
-                    Instagramから相談する
-                  </a>
-                </div>
-              )}
 
               <NoteBlock title="料金について">
                 配送の内容（荷物のサイズ・数量・エリア・頻度）によって条件が異なるため、当サイトには一律の料金を掲載していません。ご相談いただいた内容にもとづいてお見積りをご提示します。

@@ -220,7 +220,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 </p>
                 <div className="mt-7 space-y-3">
                   <ButtonLink href="/contact/business" variant="primary" className="w-full">
-                    法人向け問い合わせフォーム
+                    配送のご依頼窓口へ
                   </ButtonLink>
                   {socialLinks.tel && (
                     <ButtonLink

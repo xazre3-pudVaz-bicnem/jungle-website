@@ -53,8 +53,9 @@ export const businessDefinition =
 
 /**
  * 外部リンク。
- * 確認できていない連絡手段（LINE・メール）は null のままにしてください。
+ * 確認できていない連絡手段（LINE）は null のままにしてください。
  * null の項目はサイト上に一切表示されません。
+ * メールアドレスはオーナーの意向によりサイトに掲載しません（フォームの受信先は環境変数で設定）。
  */
 export const socialLinks = {
   /** Instagram：確認済み */
@@ -63,8 +64,6 @@ export const socialLinks = {
   line: null as string | null,
   /** 問い合わせ・応募用の電話番号（確認済み） */
   tel: '090-7756-2400' as string | null,
-  /** 問い合わせ用メールアドレス（確認済み） */
-  email: 'ex.jsb.seco24@icloud.com' as string | null,
   /**
    * TODO: GoogleビジネスプロフィールのURL。
    * 作成後にここへ設定すると Organization の sameAs に自動で追加されます。

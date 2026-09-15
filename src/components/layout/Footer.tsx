@@ -46,16 +46,6 @@ export function Footer() {
                   </dd>
                 </div>
               )}
-              {socialLinks.email && (
-                <div className="flex gap-3">
-                  <dt className="shrink-0 font-bold text-white/45">メール</dt>
-                  <dd>
-                    <a href={`mailto:${socialLinks.email}`} className="link-underline">
-                      {socialLinks.email}
-                    </a>
-                  </dd>
-                </div>
-              )}
               <div className="flex gap-3">
                 <dt className="shrink-0 font-bold text-white/45">連絡</dt>
                 <dd>

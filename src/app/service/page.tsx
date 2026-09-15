@@ -199,7 +199,7 @@ export default function ServicePage() {
               </p>
               <div className="mt-6 space-y-3">
                 <ButtonLink href="/contact/business" variant="ink" className="w-full">
-                  法人向け問い合わせフォームへ
+                  配送のご依頼窓口へ
                 </ButtonLink>
                 {socialLinks.tel && (
                   <ButtonLink

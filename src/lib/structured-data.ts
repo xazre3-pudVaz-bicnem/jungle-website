@@ -80,7 +80,6 @@ export function organizationJsonLd() {
           },
         }
       : {}),
-    ...(show(company.email) ? { email: show(company.email) } : {}),
     ...(show(company.representative)
       ? { founder: { '@type': 'Person', name: show(company.representative) } }
       : {}),

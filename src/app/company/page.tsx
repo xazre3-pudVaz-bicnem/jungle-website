@@ -111,18 +111,6 @@ export default function CompanyPage() {
                       </a>
                     </div>
                   )}
-
-                  {socialLinks.email && (
-                    <div className="border-l-2 border-white/30 pl-5">
-                      <p className="text-sm font-bold text-white">メール</p>
-                      <a
-                        href={`mailto:${socialLinks.email}`}
-                        className="mt-2 inline-block text-sm font-bold break-all text-jungle"
-                      >
-                        {socialLinks.email}
-                      </a>
-                    </div>
-                  )}
                 </div>
               </div>
 

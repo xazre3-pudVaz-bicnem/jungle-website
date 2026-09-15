@@ -292,14 +292,11 @@ npm run indexing:delete -- https://www.jungle-transport24.com/jobs/<slug>
 
 ## 問い合わせメールの設定
 
-フォームは2種類あり、**目的別に窓口を分けています**。
+フォームはドライバー応募（`/entry` → `/api/entry`）の1種類のみです。
+法人からの配送依頼（`/contact/business`）はフォームを置かず、お電話・Instagramへ案内しています。
+メールアドレスはオーナーの意向によりサイト上に掲載していません。
 
-| フォーム | 用途 | API |
-| --- | --- | --- |
-| `/entry` | ドライバー応募 | `/api/entry` |
-| `/contact/business` | 法人からの配送依頼 | `/api/business-contact` |
-
-いずれも [Resend](https://resend.com/) を使ってメールを送信します。
+応募フォームは [Resend](https://resend.com/) を使ってメールを送信します。
 
 ### 手順
 
@@ -311,25 +308,22 @@ npm run indexing:delete -- https://www.jungle-transport24.com/jobs/<slug>
 ```bash
 RESEND_API_KEY=re_xxxxxxxxxxxx
 CONTACT_FROM_EMAIL=noreply@<Resendで認証したドメイン>
-CONTACT_TO_EMAIL=ex.jsb.seco24@icloud.com
-
-# 法人問い合わせだけ別のアドレスで受けたい場合（任意）
-BUSINESS_CONTACT_TO_EMAIL=<法人問い合わせを受け取るメールアドレス>
+CONTACT_TO_EMAIL=<応募通知を受け取るメールアドレス>
 ```
 
 > **`CONTACT_FROM_EMAIL` に iCloud のアドレスは使えません**
 >
 > 送信元（`CONTACT_FROM_EMAIL`）は **Resend で所有権を認証したドメインのアドレス**である必要があります。
-> `ex.jsb.seco24@icloud.com` のようなフリーメールは、送信元としては指定できません。
+> iCloud などのフリーメールは、送信元としては指定できません。
 >
-> - **受信先（`CONTACT_TO_EMAIL`）** … `ex.jsb.seco24@icloud.com` をそのまま指定できます
+> - **受信先（`CONTACT_TO_EMAIL`）** … iCloud などのフリーメールをそのまま指定できます
 > - **送信元（`CONTACT_FROM_EMAIL`）** … `jungle-transport24.com` を Resend の Domains に追加し、
 >   DNS レコード（SPF / DKIM）を設定したうえで `noreply@jungle-transport24.com` などを指定してください
 >
 > ドメイン認証を行うまでは、Resend の検証用アドレス `onboarding@resend.dev` を
 > `CONTACT_FROM_EMAIL` に指定することで動作確認だけは行えます（本番運用には使わないでください）。
 >
-> フォームからの通知は `reply_to` に応募者・依頼者のアドレスが入るため、
+> フォームからの通知は `reply_to` に応募者のアドレスが入るため、
 > 受信したメールにそのまま返信すれば相手に届きます。
 
 ### 未設定のときの挙動
@@ -355,8 +349,6 @@ BUSINESS_CONTACT_TO_EMAIL=<法人問い合わせを受け取るメールアド�
 | `job_detail_view` | 求人詳細ページの閲覧 |
 | `entry_form_start` | 応募フォームの入力開始 |
 | `entry_form_submit` | 応募フォームの送信完了 |
-| `business_contact_start` | 法人問い合わせフォームの入力開始 |
-| `business_contact_submit` | 法人問い合わせフォームの送信完了 |
 | `tel_tap` | 電話番号のタップ |
 | `instagram_tap` | Instagramリンクのタップ |
 | `job_to_entry` | 求人ページから応募フォームへの遷移 |
@@ -556,7 +548,8 @@ npm run indexing:delete -- https://www.jungle-transport24.com/jobs/akashi-light-
 
 - 正式名称：**JUNGLE**／ブランド表記：**JUNGLE TRANSPORT**（ロゴより）
 - 電話番号：**090-7756-2400**
-- メールアドレス：**ex.jsb.seco24@icloud.com**
+- 所在地：**兵庫県神戸市西区玉津町出合44-1**
+- メールアドレス：サイト非掲載（オーナー指示）
 - 対象エリア：兵庫県明石市・神戸市西区
 - 事業内容：軽貨物配送（宅配・企業配送）／引越し／遺品回収／不動産関連業務
 - 募集条件：業務委託契約、要普通自動車運転免許、未経験可、女性歓迎
