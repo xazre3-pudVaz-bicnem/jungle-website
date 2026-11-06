@@ -76,12 +76,17 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       <Section tone="mist" spacing="tight">
         <Container>
           <h2 className="sr-only">対応の要点</h2>
-          <dl className="grid gap-px bg-line sm:grid-cols-3">
+          <dl
+            className={`grid gap-px bg-line ${service.pricing ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-3'}`}
+          >
             <div className="bg-mist p-7">
               <dt className="text-xs font-bold text-body/60">対応エリア</dt>
               <dd className="mt-3 space-y-1 text-sm leading-7 font-bold text-ink">
                 {(service.coverage ?? []).map((c) => (
-                  <p key={c}>{c}</p>
+                  // 地名の途中で改行しないよう、「・」などの区切りでだけ折り返す
+                  <p key={c} className="break-keep [overflow-wrap:anywhere]">
+                    {c}
+                  </p>
                 ))}
               </dd>
             </div>
@@ -90,7 +95,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               <dd className="mt-3 text-sm leading-7 font-bold text-ink">
                 軽自動車（軽バン）
                 <span className="mt-1 block text-xs font-normal text-body/70">
-                  積載できるサイズ・重量の荷物が対象です
+                  {service.vehicleNote ?? '積載できるサイズ・重量の荷物が対象です'}
                 </span>
               </dd>
             </div>
@@ -101,6 +106,23 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 <span className="mt-1 block text-xs font-normal text-body/70">{service.hours?.note}</span>
               </dd>
             </div>
+            {service.pricing && (
+              <div className="bg-mist p-7">
+                <dt className="text-xs font-bold text-body/60">料金の目安</dt>
+                <dd className="mt-3 text-sm leading-7 font-bold text-ink">
+                  {service.pricing.startingPrice.value}
+                  <span className="mt-1 block text-xs font-normal text-body/70">
+                    {service.pricing.startingPrice.note}
+                  </span>
+                  <a
+                    href="#pricing"
+                    className="mt-2 inline-block text-xs font-bold text-ink underline decoration-jungle decoration-2 underline-offset-4"
+                  >
+                    料金表を見る
+                  </a>
+                </dd>
+              </div>
+            )}
           </dl>
         </Container>
       </Section>
@@ -122,6 +144,65 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                   ))}
                 </ul>
               </section>
+
+              {/* 料金の目安（料金表を公開している事業のみ） */}
+              {service.pricing && (
+                <section id="pricing" className="scroll-mt-24">
+                  <SectionHeading eyebrow="Price" title="料金の目安" as="h2" lead={service.pricing.lead} />
+
+                  <div className="mt-10 grid gap-10 sm:grid-cols-2 sm:gap-8">
+                    <PriceTable
+                      caption="基本運賃（税別）"
+                      head={['配送距離', '料金']}
+                      rows={service.pricing.baseRates.map((rate) => ({ label: rate.distance, value: rate.price }))}
+                      note={service.pricing.baseNote}
+                    />
+                    <PriceTable
+                      caption="料金の計算例（税別）"
+                      head={['配送距離', '料金']}
+                      rows={service.pricing.examples.map((example) => ({
+                        label: example.distance,
+                        value: example.price,
+                      }))}
+                    />
+                  </div>
+
+                  <div className="mt-10">
+                    <PriceTable
+                      caption="別途かかる料金"
+                      head={['項目', '料金']}
+                      rows={service.pricing.extras.map((extra) => ({ label: extra.item, value: extra.price }))}
+                    />
+                  </div>
+
+                  <ul className="mt-6 space-y-1.5 text-xs leading-6 text-body/70">
+                    {service.pricing.conditions.map((condition) => (
+                      <li key={condition}>※ {condition}</li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-8">
+                    <NoteBlock title="料金の目安はお問い合わせください">
+                      ご依頼の内容に合わせた料金は、お電話またはInstagramのダイレクトメッセージでお問い合わせください。集荷場所・届け先・日時を伺い、お見積りをご案内します。
+                    </NoteBlock>
+                    <div className="mt-6 flex flex-wrap gap-4">
+                      {socialLinks.tel && (
+                        <ButtonLink
+                          href={`tel:${socialLinks.tel.replace(/-/g, '')}`}
+                          variant="primary"
+                          external
+                          ariaLabel={`電話で料金を問い合わせる ${socialLinks.tel}`}
+                        >
+                          電話で問い合わせる（{socialLinks.tel}）
+                        </ButtonLink>
+                      )}
+                      <ButtonLink href="/contact/business" variant="outline">
+                        配送のご依頼窓口へ
+                      </ButtonLink>
+                    </div>
+                  </div>
+                </section>
+              )}
 
               {/* 対応できる荷物 */}
               <section>
@@ -305,5 +386,47 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         </Section>
       )}
     </>
+  );
+}
+
+/** 料金表。1列目を行見出し、2列目を金額として表示します */
+function PriceTable({
+  caption,
+  head,
+  rows,
+  note,
+}: {
+  caption: string;
+  head: [string, string];
+  rows: { label: string; value: string }[];
+  note?: string;
+}) {
+  return (
+    <div>
+      <table className="w-full border-collapse text-sm">
+        <caption className="pb-3 text-left text-base font-bold text-ink">{caption}</caption>
+        <thead>
+          <tr className="border-b-2 border-ink text-xs text-body/60">
+            <th scope="col" className="py-2.5 pr-4 text-left font-bold">
+              {head[0]}
+            </th>
+            <th scope="col" className="py-2.5 text-right font-bold">
+              {head[1]}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.label} className="border-b border-line">
+              <th scope="row" className="py-3.5 pr-4 text-left font-bold text-ink">
+                {row.label}
+              </th>
+              <td className="py-3.5 text-right leading-6 text-body">{row.value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {note && <p className="mt-3 text-xs leading-6 text-body/70">※ {note}</p>}
+    </div>
   );
 }

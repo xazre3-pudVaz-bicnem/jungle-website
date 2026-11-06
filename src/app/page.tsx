@@ -29,7 +29,7 @@ function CoverageLines() {
   return (
     <>
       {coverageRegions.map((region) => (
-        <span key={region.prefecture} className="block">
+        <span key={region.prefecture} className="block break-keep [overflow-wrap:anywhere]">
           {regionLabel(region)}
         </span>
       ))}
@@ -110,7 +110,7 @@ export default function HomePage() {
                 {businessDefinition}
               </h2>
               <p className="mt-6 text-[0.9375rem] leading-8 text-body">
-                取り扱うのは、軽自動車に積載できるサイズの荷物です。通販商品などを個人宅へお届けする宅配、企業・事業所の間を結ぶ企業配送に加え、車両1台を貸し切るチャーター便にも対応しています。事業拡大にともない、兵庫県・神奈川県・東京都で走る
+                取り扱うのは、軽自動車に積載できるサイズの荷物です。通販商品などを個人宅へお届けする宅配、企業・事業所の間を結ぶ企業配送に加え、軽バン1台から貸し切れるチャーター便にも対応しています。事業拡大にともない、兵庫県・神奈川県・東京都で走る
                 <strong className="font-bold text-ink">軽貨物ドライバーを募集</strong>
                 しています。普通自動車運転免許があれば、配送の実務経験がない方も応募いただけます。
               </p>
@@ -175,13 +175,13 @@ export default function HomePage() {
               />
               <div className="prose-jungle mt-8 text-[0.9375rem]">
                 <p>
-                  JUNGLEは兵庫県と神奈川県を拠点に、軽貨物配送を中心とした事業を行っています。通販商品を個人宅へ届ける宅配、企業や事業所の間を結ぶ企業配送、そして車両1台を貸し切って運ぶチャーター便。どれも、地域の生活と仕事を支える仕事です。
+                  JUNGLEは兵庫県と神奈川県を拠点に、軽貨物配送を中心とした事業を行っています。通販商品を個人宅へ届ける宅配、企業や事業所の間を結ぶ企業配送、そして軽バン1台から貸し切れるチャーター便。どれも、地域の生活と仕事を支える仕事です。
                 </p>
                 <p>
                   配送以外にも、不動産関連の業務、引越し、遺品回収などに取り組んできました。「運ぶ」ことを軸に、地域の困りごとに幅広く応えてきたことが、いまの事業の広がりにつながっています。
                 </p>
                 <p>
-                  ドライバーは一人で車を走らせる時間が長い仕事です。だからこそ、始めるときの不安をできるだけ小さくしたい。車両リースや日当保証、同乗研修を用意しているのはそのためです。
+                  ドライバーは一人で車を走らせる時間が長い仕事です。だからこそ、始めるときの不安をできるだけ小さくしたい。車両リースや同乗研修を用意しているのはそのためです。
                 </p>
               </div>
               <div className="mt-9 flex flex-wrap gap-x-8 gap-y-4">
@@ -211,7 +211,7 @@ export default function HomePage() {
                 兵庫・神奈川・東京で走る軽貨物ドライバーを募集しています
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-ink/80">
-                契約形態は業務委託です。普通自動車運転免許があれば、配送の実務経験がない方も応募いただけます。車両リース・日当保証・同乗研修をご用意しています。
+                契約形態は業務委託です。普通自動車運転免許があれば、配送の実務経験がない方も応募いただけます。車両リース・同乗研修をご用意しています。
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <ButtonLink href="/jobs" variant="ink">
@@ -336,7 +336,7 @@ export default function HomePage() {
               <ul className="mt-8 space-y-3.5 text-sm leading-7 text-body">
                 <li className="flex gap-3">
                   <span aria-hidden="true" className="mt-2.5 h-1.5 w-4 shrink-0 bg-jungle" />
-                  日当保証があるため、稼働の初期段階から一定の報酬が確保されます
+                  未経験の方は同乗研修から始め、慣れるにつれて配れる件数が増えていきます
                 </li>
                 <li className="flex gap-3">
                   <span aria-hidden="true" className="mt-2.5 h-1.5 w-4 shrink-0 bg-jungle" />
@@ -344,7 +344,7 @@ export default function HomePage() {
                 </li>
                 <li className="flex gap-3">
                   <span aria-hidden="true" className="mt-2.5 h-1.5 w-4 shrink-0 bg-jungle" />
-                  報酬の計算方法・日当保証の金額は、面談時に具体的にご説明します
+                  報酬の計算方法は、面談時に具体的にご説明します
                 </li>
               </ul>
               <p className="mt-8 border-l-4 border-line pl-5 text-xs leading-6 text-body/70">
@@ -644,7 +644,7 @@ export default function HomePage() {
               <div className="mt-6 border-l-4 border-jungle bg-mist px-6 py-6">
                 <p className="text-sm font-bold text-ink">法人・事業者のお客様へ</p>
                 <p className="mt-2.5 text-sm leading-7 text-body">
-                  宅配・企業配送のご依頼に加え、車両1台を貸し切るチャーター便のご相談も承っています。ドライバー応募とは窓口が異なりますので、事業内容ページよりご確認ください。
+                  宅配・企業配送のご依頼に加え、軽バン1台から手配できるチャーター便（長距離にも対応）のご相談も承っています。ドライバー応募とは窓口が異なりますので、事業内容ページよりご確認ください。
                 </p>
                 <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
                   <TextLink href="/service">配送のご相談について</TextLink>
