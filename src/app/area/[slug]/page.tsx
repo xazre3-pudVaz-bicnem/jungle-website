@@ -62,7 +62,7 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ slu
       />
 
       <PageHero
-        eyebrow={`${area.name}｜対応エリア`}
+        eyebrow={`${area.prefecture}｜対応エリア`}
         title={area.title}
         lead={area.lead}
         image={area.heroImage}
@@ -76,8 +76,8 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ slu
           <h2 className="sr-only">{area.name}での対応内容</h2>
           <dl className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
             {[
-              ['配送内容', '個人宅向け宅配／企業向け配送'],
-              ['配送エリア', area.name],
+              ['配送内容', '個人宅向け宅配／企業向け配送／チャーター便'],
+              ['配送エリア', area.fullName],
               ['ドライバー募集', jobs.length > 0 ? '募集中' : '現在は募集していません'],
               ['通勤できる地域', area.commuteFrom.slice(0, 3).join('／') + ' ほか'],
             ].map(([label, value]) => (
@@ -258,6 +258,7 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ slu
                 <TextLink href="/area">対応エリア一覧へ戻る</TextLink>
                 <TextLink href="/service/home-delivery">個人宅向け宅配について</TextLink>
                 <TextLink href="/service/business-delivery">企業向け配送について</TextLink>
+                <TextLink href="/service/charter">チャーター便について</TextLink>
                 <TextLink href="/contact/business">配送のご依頼（法人の方）</TextLink>
                 {relatedColumns.map((column) => (
                   <TextLink key={column!.slug} href={`/columns/${column!.slug}`}>

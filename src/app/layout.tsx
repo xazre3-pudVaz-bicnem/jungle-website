@@ -29,7 +29,7 @@ const anton = Anton({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: '兵庫・明石の軽貨物配送｜JUNGLE',
+    default: '兵庫・神奈川の軽貨物配送｜JUNGLE',
     template: `%s｜${siteConfig.shortName}`,
   },
   description: siteConfig.description,

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Logo } from '@/components/ui/Logo';
 import { formattedAddress } from '@/data/company';
+import { baseText, coverageLines } from '@/data/coverage';
 import { footerNav, siteConfig, socialLinks } from '@/data/site';
 
 /**
@@ -21,14 +22,24 @@ export function Footer() {
               <Logo className="h-11" width={800} height={210} tone="dark" />
             </Link>
             <p className="mt-6 max-w-sm text-sm leading-7 text-white/65">
-              兵庫県明石市・神戸市西部エリアを中心に、宅配および企業配送を行う軽貨物配送のJUNGLE
+              兵庫県と神奈川県を拠点に、宅配・企業配送・チャーター便を行う軽貨物配送のJUNGLE
               TRANSPORTです。軽貨物ドライバーを募集しています。
             </p>
 
             <dl className="mt-8 space-y-3 text-sm text-white/65">
               <div className="flex gap-3">
+                <dt className="shrink-0 font-bold text-white/45">拠点</dt>
+                <dd>{baseText}</dd>
+              </div>
+              <div className="flex gap-3">
                 <dt className="shrink-0 font-bold text-white/45">エリア</dt>
-                <dd>兵庫県（明石市・神戸市西部を中心に）</dd>
+                <dd>
+                  {coverageLines.map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
+                </dd>
               </div>
               {address && (
                 <div className="flex gap-3">

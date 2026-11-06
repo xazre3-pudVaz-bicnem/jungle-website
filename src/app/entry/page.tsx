@@ -13,7 +13,7 @@ import { socialLinks } from '@/data/site';
 export const metadata: Metadata = buildMetadata({
   title: '応募フォーム｜軽貨物ドライバー募集',
   description:
-    'JUNGLEの軽貨物ドライバー募集への応募フォームです。兵庫県明石市・神戸市西部エリアで働きたい方はこちらからご応募ください。ご質問だけのご相談も受け付けています。',
+    'JUNGLEの軽貨物ドライバー募集への応募フォームです。兵庫県・神奈川県・東京都の対応エリアで働きたい方はこちらからご応募ください。ご質問だけのご相談も受け付けています。',
   path: '/entry',
 });
 

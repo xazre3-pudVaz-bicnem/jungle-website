@@ -7,6 +7,16 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   poweredByHeader: false,
+  async redirects() {
+    return [
+      /*
+       * 2026-11-06：対応エリアを「神戸市西区」から「神戸市」全体に広げたため、
+       * 検索エンジンに登録済みの旧URLを新しいページへ恒久的に転送します（評価を引き継ぐため 308）。
+       */
+      { source: '/area/kobe-nishi', destination: '/area/kobe', permanent: true },
+      { source: '/recruit/kobe-nishi', destination: '/recruit/kobe', permanent: true },
+    ];
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     /*

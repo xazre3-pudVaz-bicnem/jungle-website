@@ -23,7 +23,9 @@ import {
 } from '@/lib/structured-data';
 import { formatJapaneseDate } from '@/lib/format';
 import { imagePaths } from '@/lib/images';
-import { detailSpecs, getJob, publishedJobs, summarySpecs } from '@/data/jobs';
+import { detailSpecs, getJob, jobRegionLabel, publishedJobs, summarySpecs } from '@/data/jobs';
+import { coverageRegions } from '@/data/coverage';
+import { getArea } from '@/data/areas';
 import { faqsByIds } from '@/data/faq';
 import { applicationSteps } from '@/data/process';
 import { socialLinks } from '@/data/site';
@@ -61,15 +63,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!job || job.status === 'draft') return {};
 
   const isClosed = job.status === 'closed';
-  const locality = job.jobLocations[0]?.locality ?? '兵庫県';
+  const region = jobRegionLabel(job);
 
   return buildMetadata({
     title: isClosed
       ? `【募集終了】${job.title}`
-      : `${locality}の軽貨物ドライバー求人｜業務委託・未経験可`,
+      : `${region}の軽貨物ドライバー求人｜業務委託・未経験可`,
     description: isClosed
       ? `${job.title}の募集は終了しました。現在募集中の求人は求人一覧ページからご確認ください。`
-      : `${locality}を中心に配送する軽貨物ドライバーの求人です。業務委託契約、普通自動車運転免許があれば未経験可。車両リース・日当保証・同乗研修あり。仕事内容と応募方法をご確認ください。`,
+      : `${region}で配送する軽貨物ドライバーの求人です。業務委託契約、普通自動車運転免許があれば未経験可。車両リース・日当保証・同乗研修あり。仕事内容と応募方法をご確認ください。`,
     path: `/jobs/${job.slug}`,
     // 募集終了した求人は検索結果に出さない
     noindex: isClosed,
@@ -87,7 +89,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
   const faqItems = faqsByIds(detailFaqIds);
   const overview = summarySpecs(job);
   const details = detailSpecs(job);
-  const locality = job.jobLocations[0]?.locality ?? '兵庫県';
+  const region = jobRegionLabel(job);
 
   const crumbs: Crumb[] = [
     { name: 'ホーム', href: '/' },
@@ -106,7 +108,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
           isOpen ? faqItemsToJsonLd(faqItems) : null,
           isOpen
             ? webPageJsonLd({
-                name: `${locality}の軽貨物ドライバー求人`,
+                name: `${region}の軽貨物ドライバー求人`,
                 description: job.summary,
                 path: `/jobs/${job.slug}`,
                 updatedAt: job.updatedAt,
@@ -116,7 +118,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
       />
 
       <PageHero
-        eyebrow={isOpen ? `${locality}｜軽貨物ドライバー求人` : '募集終了'}
+        eyebrow={isOpen ? `${region}｜軽貨物ドライバー求人` : '募集終了'}
         title={job.title}
         lead={isOpen ? job.summary : 'この求人の募集は終了しました。'}
         image={isOpen ? imagePaths.loadingCloseup : undefined}
@@ -150,7 +152,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
             <Container>
               <h2 className="text-xl font-bold text-ink sm:text-2xl">募集概要</h2>
               <p className="mt-4 max-w-3xl text-sm leading-7 text-body">
-                {locality}を中心に配送する軽貨物ドライバーの募集です。契約形態は業務委託で、普通自動車運転免許があれば配送の実務経験がない方も応募いただけます。
+                {region}で配送する軽貨物ドライバーの募集です。契約形態は業務委託で、普通自動車運転免許があれば配送の実務経験がない方も応募いただけます。
               </p>
 
               <dl className="mt-8 overflow-hidden border-t-2 border-ink bg-white">
@@ -195,8 +197,10 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
                   <section>
                     <SectionHeading eyebrow="Job Description" title="仕事内容" as="h2" />
                     <p className="mt-6 text-[0.9375rem] leading-8 text-body">
-                      軽自動車（軽バン）を使い、{job.deliveryAreas.join('と')}
-                      を担当します。個人宅への宅配と、企業・事業所向けの配送の両方があります。担当する案件によって、宅配中心になる場合と企業配送中心になる場合があります。
+                      軽自動車（軽バン）を使い、担当エリアの配送を行います。個人宅への宅配と、企業・事業所向けの配送の両方があります。担当する案件によって、宅配中心になる場合と企業配送中心になる場合があります。
+                    </p>
+                    <p className="mt-4 text-[0.9375rem] leading-8 text-body">
+                      勤務エリアは{job.areas.join('、')}です。担当エリアは、このなかから案件の状況とご希望をふまえて決まります。
                     </p>
                     <ul className="mt-7 space-y-4">
                       {job.duties.map((duty) => (
@@ -450,11 +454,24 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
                     </div>
                   </dl>
 
+                  <nav aria-label="エリア別の採用情報" className="mt-8 border-t-2 border-ink pt-6">
+                    <h2 className="text-sm font-bold text-ink">エリア別の働き方</h2>
+                    <ul className="mt-4 flex flex-col gap-3">
+                      {coverageRegions.flatMap((coverage) =>
+                        coverage.cities.map((city) => (
+                          <li key={city.slug}>
+                            <TextLink href={`/recruit/${city.slug}`}>
+                              {getArea(city.slug)?.name ?? city.name}で働く
+                            </TextLink>
+                          </li>
+                        )),
+                      )}
+                    </ul>
+                  </nav>
+
                   <nav aria-label="関連ページ" className="mt-8 flex flex-col gap-3.5">
-                    <TextLink href="/recruit/akashi">明石市で働く軽貨物ドライバーの情報</TextLink>
-                    <TextLink href="/recruit/kobe-nishi">神戸市西区で働く軽貨物ドライバーの情報</TextLink>
                     <TextLink href="/recruit/contractor">業務委託契約について</TextLink>
-                    <TextLink href="/area/akashi">明石市の配送エリア情報</TextLink>
+                    <TextLink href="/area">対応エリアの詳細</TextLink>
                     <TextLink href="/faq">よくある質問</TextLink>
                   </nav>
                 </aside>

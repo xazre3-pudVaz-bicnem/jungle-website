@@ -19,7 +19,7 @@ export const siteConfig = {
   url: (process.env.NEXT_PUBLIC_SITE_URL || PRODUCTION_URL).replace(/\/$/, ''),
   /** サイト全体のデフォルト説明文 */
   description:
-    'JUNGLE TRANSPORTは、兵庫県明石市・神戸市西部を中心に個人宅向け宅配と企業向け配送を行う軽貨物配送事業者です。軽貨物ドライバーを募集しています。',
+    'JUNGLE TRANSPORTは、兵庫県と神奈川県を拠点に、神戸市・明石市・加古川市、横浜市・川崎市、東京都の一部エリアで宅配・企業配送・チャーター便を行う軽貨物配送事業者です。軽貨物ドライバーを募集しています。',
   locale: 'ja_JP',
   /** OGP画像（1200×630）。/public に配置 */
   ogImage: '/ogp.webp',
@@ -49,7 +49,7 @@ export const siteConfig = {
  * ページごとにそのまま全文コピーせず、文脈に合わせて使い分けてください。
  */
 export const businessDefinition =
-  'JUNGLE TRANSPORTは、兵庫県明石市・神戸市西部を中心に、個人宅向けの宅配と企業向けの配送を行う軽貨物配送事業者です。';
+  'JUNGLE TRANSPORTは、兵庫県と神奈川県を拠点に、個人宅向けの宅配、企業向けの配送、チャーター便を行う軽貨物配送事業者です。';
 
 /**
  * 外部リンク。
@@ -89,6 +89,7 @@ export const footerNav = [
       { href: '/service', label: '事業内容' },
       { href: '/service/home-delivery', label: '個人宅向け宅配' },
       { href: '/service/business-delivery', label: '企業向け配送' },
+      { href: '/service/charter', label: 'チャーター便' },
       { href: '/contact/business', label: '配送のご依頼（法人）' },
       { href: '/about', label: 'JUNGLEについて' },
       { href: '/company', label: '会社概要' },
@@ -99,8 +100,13 @@ export const footerNav = [
     links: [
       { href: '/recruit', label: '採用トップ' },
       { href: '/jobs', label: '求人一覧' },
+      // エリア別の採用ガイド。coverage.ts の対応エリアと揃えています
+      { href: '/recruit/kobe', label: '神戸市で働く' },
       { href: '/recruit/akashi', label: '明石市で働く' },
-      { href: '/recruit/kobe-nishi', label: '神戸市西区で働く' },
+      { href: '/recruit/kakogawa', label: '加古川市で働く' },
+      { href: '/recruit/yokohama', label: '横浜市で働く' },
+      { href: '/recruit/kawasaki', label: '川崎市で働く' },
+      { href: '/recruit/tokyo', label: '東京都で働く' },
       { href: '/recruit/beginner', label: '未経験から始める' },
       { href: '/recruit/no-vehicle', label: '車を持っていない方へ' },
       { href: '/recruit/contractor', label: '業務委託について' },

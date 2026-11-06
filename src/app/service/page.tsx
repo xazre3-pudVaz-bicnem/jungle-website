@@ -10,12 +10,13 @@ import { buildMetadata } from '@/lib/seo';
 import { breadcrumbJsonLd, serviceJsonLd, type Crumb } from '@/lib/structured-data';
 import { imagePaths } from '@/lib/images';
 import { services, qualityPolicies } from '@/data/services';
+import { coverageText } from '@/data/coverage';
 import { socialLinks } from '@/data/site';
 
 export const metadata: Metadata = buildMetadata({
-  title: '事業内容｜明石・神戸西の軽貨物配送会社',
+  title: '事業内容｜兵庫・神奈川の軽貨物配送・チャーター便',
   description:
-    'JUNGLEの事業内容をご紹介します。兵庫県明石市・神戸市西部エリアでの個人宅向け宅配、企業配送を中心に、引越し・遺品回収などの運搬業務にも対応しています。',
+    'JUNGLEの事業内容をご紹介します。兵庫県と神奈川県を拠点に、個人宅向け宅配・企業配送・チャーター便の軽貨物配送を行い、引越し・遺品回収などの運搬業務にも対応しています。',
   path: '/service',
 });
 
@@ -41,8 +42,14 @@ export default function ServicePage() {
 
       <PageHero
         eyebrow="Service"
-        title="兵庫県で「運ぶ」を担う。"
-        lead="JUNGLEは兵庫県明石市・神戸市西部エリアを中心に、軽貨物配送を行っています。個人宅への宅配から企業配送まで、地域の物流を支える仕事です。"
+        title={
+          <>
+            兵庫と神奈川で、
+            <br className="sm:hidden" />
+            「運ぶ」を担う。
+          </>
+        }
+        lead="JUNGLEは兵庫県と神奈川県を拠点に、東京都の一部エリアまで軽貨物配送を行っています。個人宅への宅配、企業配送、チャーター便まで、地域の物流を支える仕事です。"
         image={imagePaths.bridgeVans}
         imageAlt="夕景の明石海峡大橋を背に並ぶJUNGLEの軽貨物車両"
       />
@@ -53,20 +60,16 @@ export default function ServicePage() {
         <Container>
           <SectionHeading
             eyebrow="Core Business"
-            title="軽貨物配送｜2つの柱"
-            lead="軽自動車を使った配送を主たる事業としています。扱う荷物は軽自動車に積載できるサイズが中心です。"
+            title={`軽貨物配送｜${primaryServices.length}つのサービス`}
+            lead="軽自動車を使った配送を主たる事業としています。扱う荷物は軽自動車に積載できるサイズが中心です。宅配・企業配送に加え、車両1台を貸し切るチャーター便にも対応しています。"
           />
 
           <div className="mt-16 space-y-16">
             {primaryServices.map((service, index) => (
               <article key={service.id} className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center lg:gap-16">
                 <Photo
-                  src={index === 0 ? imagePaths.handoverSenior : imagePaths.businessWarehouse}
-                  alt={
-                    index === 0
-                      ? '個人宅の玄関先で荷物をお届けするJUNGLEのドライバー'
-                      : '配送拠点で企業向けの荷物を仕分けするJUNGLEのスタッフ'
-                  }
+                  src={service.heroImage ?? imagePaths.loadingPackages}
+                  alt={service.heroImageAlt ?? `${service.name}の様子`}
                   fallbackLabel={service.eyebrow}
                   className={`aspect-4/3 w-full ${index % 2 === 1 ? 'lg:order-2' : ''}`}
                   sizes="(min-width: 1024px) 42vw, 100vw"
@@ -147,7 +150,7 @@ export default function ServicePage() {
               },
               {
                 heading: 'どのエリアに対応しているのか',
-                body: '兵庫県明石市および神戸市西部エリアが中心です。担当エリアが集約されているため、同じ地域を繰り返し走るなかで配送の精度と効率が高まっていきます。エリアに関するご相談は個別にお受けしています。',
+                body: `${coverageText}に対応しています。担当エリアを決めて同じ地域を繰り返し走るため、配送の精度と効率が高まっていきます。エリアに関するご相談は個別にお受けしています。`,
               },
               {
                 heading: 'どのような配送体制なのか',
@@ -194,7 +197,7 @@ export default function ServicePage() {
                 配送業務のご依頼・ご相談
               </h2>
               <p className="mt-5 flex-1 text-sm leading-7 text-body">
-                法人・事業者のお客様からの配送のご依頼、継続的な配送業務の受託についてのご相談を承っています。
+                法人・事業者のお客様からの配送のご依頼、継続的な配送業務の受託、チャーター便（貸切配送）についてのご相談を承っています。
                 対応可能な範囲や条件については個別にご相談ください。
               </p>
               <div className="mt-6 space-y-3">
@@ -222,7 +225,7 @@ export default function ServicePage() {
                 軽貨物ドライバーの募集
               </h2>
               <p className="mt-5 flex-1 text-sm leading-7 text-white/70">
-                事業拡大にともない、明石・神戸西エリアで走る軽貨物ドライバーを募集しています。
+                事業拡大にともない、兵庫県・神奈川県・東京都で走る軽貨物ドライバーを募集しています。
                 普通自動車運転免許があれば、配送の実務経験がない方も応募いただけます。
               </p>
               <div className="mt-8 space-y-3">
