@@ -61,7 +61,7 @@ export default function ServicePage() {
           <SectionHeading
             eyebrow="Core Business"
             title={`軽貨物配送｜${primaryServices.length}つのサービス`}
-            lead="軽自動車を使った配送を主たる事業としています。扱う荷物は軽自動車に積載できるサイズが中心です。宅配・企業配送に加え、車両1台を貸し切るチャーター便にも対応しています。"
+            lead="軽自動車を使った配送を主たる事業としています。扱う荷物は軽自動車に積載できるサイズが中心です。宅配・企業配送に加え、軽バン1台から貸し切れるチャーター便にも対応しています。"
           />
 
           <div className="mt-16 space-y-16">
@@ -94,6 +94,14 @@ export default function ServicePage() {
                       </li>
                     ))}
                   </ul>
+                  {service.pricing && (
+                    <p className="mt-6 text-sm font-bold text-ink">
+                      料金の目安：{service.pricing.startingPrice.value}
+                      <span className="ml-2 text-xs font-normal text-body/70">
+                        （{service.pricing.startingPrice.note}）
+                      </span>
+                    </p>
+                  )}
                   {service.hasDetailPage && (
                     <TextLink href={service.path} className="mt-7">
                       {service.name}の詳細を見る

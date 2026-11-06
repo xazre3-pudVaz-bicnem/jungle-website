@@ -85,7 +85,7 @@ export default function JobsPage() {
                             <dt className="w-20 shrink-0 font-bold text-body/50">募集地域</dt>
                             <dd className="text-body">
                               {job.areas.map((area) => (
-                                <span key={area} className="block">
+                                <span key={area} className="block break-keep [overflow-wrap:anywhere]">
                                   {area}
                                 </span>
                               ))}

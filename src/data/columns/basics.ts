@@ -12,7 +12,7 @@ export const basicsColumns: Column[] = [
     searchIntent: '軽貨物ドライバーが具体的に何をする仕事なのかを知りたい（業界一般の情報）',
     verifiedFacts: [
       'JUNGLEは兵庫県・神奈川県・東京都の対応エリアで宅配と企業配送の両方を扱っている',
-      'JUNGLEの募集は業務委託契約で、日当保証と同乗研修がある',
+      'JUNGLEの募集は業務委託契約で、同乗研修がある',
     ],
     title: '軽貨物ドライバーの仕事内容とは｜1日の業務を具体的に解説',
     description:
@@ -105,7 +105,7 @@ export const basicsColumns: Column[] = [
       },
       {
         type: 'p',
-        text: 'JUNGLEの募集は業務委託契約です。そのうえで、未経験の方が最初から不安なく走り出せるよう、日当保証と同乗研修のサポートを用意しています。',
+        text: 'JUNGLEの募集は業務委託契約です。そのうえで、未経験の方が不安なく走り出せるよう、同乗研修のサポートを用意しています。',
       },
     ],
     faqIds: ['work-content', 'work-area', 'work-alone', 'beginner-map'],

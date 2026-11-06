@@ -141,7 +141,9 @@ export default function BusinessContactPage() {
                 <h2 className="display text-xs tracking-[0.2em] text-jungle-deep">Area</h2>
                 <ul className="mt-4 space-y-2 text-sm leading-7 font-bold text-ink">
                   {coverageLines.map((line) => (
-                    <li key={line}>{line}</li>
+                    <li key={line} className="break-keep [overflow-wrap:anywhere]">
+                      {line}
+                    </li>
                   ))}
                 </ul>
                 <p className="mt-3 text-xs leading-6 text-body/70">

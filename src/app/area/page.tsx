@@ -16,7 +16,7 @@ import { businessDefinition } from '@/data/site';
 export const metadata: Metadata = buildMetadata({
   title: '対応エリア｜兵庫・神奈川・東京の軽貨物配送',
   description:
-    'JUNGLE TRANSPORTが軽貨物配送に対応しているエリアをご紹介します。兵庫県と神奈川県を拠点に、神戸市・明石市・加古川市、横浜市・川崎市、東京都の西東京エリア・都内の一部で配送を行っています。',
+    'JUNGLE TRANSPORTが軽貨物配送に対応しているエリアをご紹介します。兵庫県と神奈川県を拠点に、神戸市・明石市・加古川市、横浜市・川崎市、東京都の西東京エリア・大田区・品川区で配送を行っています。',
   path: '/area',
 });
 

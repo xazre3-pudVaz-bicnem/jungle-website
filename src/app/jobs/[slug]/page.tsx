@@ -71,7 +71,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       : `${region}の軽貨物ドライバー求人｜業務委託・未経験可`,
     description: isClosed
       ? `${job.title}の募集は終了しました。現在募集中の求人は求人一覧ページからご確認ください。`
-      : `${region}で配送する軽貨物ドライバーの求人です。業務委託契約、普通自動車運転免許があれば未経験可。車両リース・日当保証・同乗研修あり。仕事内容と応募方法をご確認ください。`,
+      : `${region}で配送する軽貨物ドライバーの求人です。業務委託契約、普通自動車運転免許があれば未経験可。車両リース・同乗研修あり。仕事内容と応募方法をご確認ください。`,
     path: `/jobs/${job.slug}`,
     // 募集終了した求人は検索結果に出さない
     noindex: isClosed,

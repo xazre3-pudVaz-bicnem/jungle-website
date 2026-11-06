@@ -35,7 +35,7 @@ export function Footer() {
                 <dt className="shrink-0 font-bold text-white/45">エリア</dt>
                 <dd>
                   {coverageLines.map((line) => (
-                    <span key={line} className="block">
+                    <span key={line} className="block break-keep [overflow-wrap:anywhere]">
                       {line}
                     </span>
                   ))}

@@ -19,7 +19,7 @@ import { coverageRegions } from '@/data/coverage';
 export const metadata: Metadata = buildMetadata({
   title: '兵庫・神奈川・東京の軽貨物ドライバー求人｜未経験者も募集',
   description:
-    'JUNGLE TRANSPORTは兵庫県・神奈川県・東京都で軽貨物ドライバーを募集しています。業務委託契約・未経験可・車両リースあり・日当保証あり。エリア別・条件別の採用ガイドもご用意しています。',
+    'JUNGLE TRANSPORTは兵庫県・神奈川県・東京都で軽貨物ドライバーを募集しています。業務委託契約・未経験可・車両リースあり・同乗研修あり。エリア別・条件別の採用ガイドもご用意しています。',
   path: '/recruit',
 });
 
