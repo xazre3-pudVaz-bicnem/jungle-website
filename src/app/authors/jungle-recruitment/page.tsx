@@ -88,7 +88,7 @@ export default function AuthorPage() {
                     ['担当業務', 'ドライバー採用に関する募集条件の整理、面談、応募者からの問い合わせ対応'],
                     ['執筆内容', '軽貨物ドライバーを目指す方に向けた採用コラム、および求人・採用ガイドページ'],
                     ['記事の確認者', columnAuthor.reviewedBy],
-                    ['稼働エリア', show(company.serviceArea) ?? '兵庫県明石市・神戸市西区'],
+                    ['稼働エリア', show(company.serviceArea) ?? '兵庫県・神奈川県・東京都の一部'],
                   ].map(([label, value]) => (
                     <div key={label} className="grid gap-2 py-5 sm:grid-cols-[9rem_1fr] sm:gap-8">
                       <dt className="text-sm font-bold text-ink">{label}</dt>
@@ -167,7 +167,7 @@ export default function AuthorPage() {
                 <p className="display text-xs tracking-[0.22em] text-jungle">Company</p>
                 <h2 className="mt-4 text-lg leading-relaxed font-bold text-white">JUNGLE TRANSPORTについて</h2>
                 <p className="mt-4 text-sm leading-7 text-white/70">
-                  兵庫県明石市・神戸市西区を中心に軽貨物配送を行っています。会社の基本情報と、事業への考え方は以下のページをご覧ください。
+                  兵庫県と神奈川県を拠点に軽貨物配送を行っています。会社の基本情報と、事業への考え方は以下のページをご覧ください。
                 </p>
                 <div className="mt-6 flex flex-col gap-3.5">
                   <Link

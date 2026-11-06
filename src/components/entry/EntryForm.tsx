@@ -250,7 +250,7 @@ export function EntryForm() {
           </div>
 
           <div>
-            <FieldLabel htmlFor={fid('city')} required hint="例：明石市、神戸市西区">
+            <FieldLabel htmlFor={fid('city')} required hint="例：神戸市西区、横浜市港北区">
               お住まいの市区町村
             </FieldLabel>
             <input
@@ -262,7 +262,7 @@ export function EntryForm() {
               aria-invalid={Boolean(errors.city)}
               aria-describedby={describedBy('city')}
               className={fieldClass}
-              placeholder="明石市"
+              placeholder="神戸市西区"
             />
             <ErrorText id={`${fid('city')}-error`} message={errors.city} />
           </div>
@@ -357,7 +357,7 @@ export function EntryForm() {
 
         <div className="space-y-7">
           <div>
-            <FieldLabel htmlFor={fid('preferredArea')} hint="例：明石市周辺、神戸市西区周辺">
+            <FieldLabel htmlFor={fid('preferredArea')} hint="例：神戸市周辺、横浜市周辺、西東京エリア">
               希望する勤務地
             </FieldLabel>
             <input
@@ -367,7 +367,7 @@ export function EntryForm() {
               aria-invalid={Boolean(errors.preferredArea)}
               aria-describedby={describedBy('preferredArea')}
               className={fieldClass}
-              placeholder="明石市周辺"
+              placeholder="神戸市周辺"
             />
             <ErrorText id={`${fid('preferredArea')}-error`} message={errors.preferredArea} />
           </div>

@@ -168,10 +168,10 @@ export default async function ColumnDetailPage({ params }: { params: Promise<{ s
               <div className="bg-ink p-8">
                 <p className="display text-xs tracking-[0.22em] text-jungle">Entry</p>
                 <h2 className="mt-4 text-lg leading-relaxed font-bold text-white">
-                  兵庫で軽貨物ドライバーを探すなら
+                  兵庫・神奈川・東京で軽貨物ドライバーを探すなら
                 </h2>
                 <p className="mt-4 text-sm leading-7 text-white/70">
-                  JUNGLEは明石・神戸西エリアで軽貨物ドライバーを募集しています。普通自動車運転免許があれば、配送の実務経験がない方も応募いただけます。
+                  JUNGLEは兵庫県・神奈川県・東京都の対応エリアで軽貨物ドライバーを募集しています。普通自動車運転免許があれば、配送の実務経験がない方も応募いただけます。
                 </p>
                 <div className="mt-7 space-y-3">
                   <ButtonLink href="/jobs" variant="primary" className="w-full">

@@ -273,7 +273,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             <div>
               <h2 className="text-lg font-bold text-ink">一緒に配送を担うドライバーも募集しています</h2>
               <p className="mt-3 max-w-2xl text-sm leading-7 text-body">
-                明石市・神戸市西区で稼働する軽貨物ドライバーを募集しています。業務委託契約で、普通自動車運転免許があれば未経験の方も応募いただけます。
+                兵庫県・神奈川県・東京都で稼働する軽貨物ドライバーを募集しています。業務委託契約で、普通自動車運転免許があれば未経験の方も応募いただけます。
               </p>
             </div>
             <ButtonLink href="/recruit" variant="ink" className="shrink-0">

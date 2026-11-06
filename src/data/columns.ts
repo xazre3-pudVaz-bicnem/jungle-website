@@ -66,7 +66,7 @@ export const columnAuthor = {
   name: 'JUNGLE TRANSPORT 採用担当',
   role: '軽貨物配送事業 採用担当',
   description:
-    '兵庫県明石市・神戸市西区で軽貨物配送を行うJUNGLE TRANSPORTの採用担当です。宅配・企業配送の現場で実際に稼働しているドライバーの声と、応募者から実際にいただく質問をもとに記事を作成しています。',
+    '兵庫県と神奈川県を拠点に軽貨物配送を行うJUNGLE TRANSPORTの採用担当です。宅配・企業配送の現場で実際に稼働しているドライバーの声と、応募者から実際にいただく質問をもとに記事を作成しています。',
   /** 著者ページのURL */
   url: '/authors/jungle-recruitment',
   /** 記事内容の確認者 */

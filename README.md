@@ -1,6 +1,7 @@
 # JUNGLE TRANSPORT 公式サイト
 
-兵庫県明石市・神戸市西区で軽貨物配送を行う **JUNGLE TRANSPORT** のコーポレートサイト兼、軽貨物ドライバー採用サイトです。
+兵庫県と神奈川県を拠点に軽貨物配送を行う **JUNGLE TRANSPORT** のコーポレートサイト兼、軽貨物ドライバー採用サイトです。
+対応エリアは兵庫県（神戸市・明石市・加古川市）、神奈川県（横浜市・川崎市）、東京都（西東京エリア・都内の一部）です。
 
 - **本番URL**：<https://www.jungle-transport24.com/>
 - **技術構成**：Next.js 16（App Router）／ TypeScript ／ Tailwind CSS v4
@@ -80,6 +81,7 @@ npm run start      # ビルド結果をローカルで起動
 | --- | --- |
 | サイト名・本番URL・ナビゲーション・SNS・GA設定 | `src/data/site.ts` |
 | 会社名・住所・代表者・電話・届出番号 | `src/data/company.ts` |
+| 拠点・対応エリアの一覧（トップ・フッター・会社概要・構造化データに反映） | `src/data/coverage.ts` |
 | 事業内容・サービス個別ページ | `src/data/services.ts` |
 | 求人情報 | `src/data/jobs.ts` |
 | 対応エリア（地域ページ） | `src/data/areas.ts` |
@@ -190,7 +192,14 @@ npm run indexing:delete -- https://www.jungle-transport24.com/jobs/<slug>
 - JUNGLEの運用実態（配送比率・件数・積み込み場所）は、裏取りできるまで `unverifiedNotes` に置く
 - **文字数を満たすための水増しをしない**
 
-現在は明石市・神戸市西区の2件です。垂水区は稼働実態が未確認のため作成していません（確認できたら追加してください）。
+現在は神戸市・明石市・加古川市・横浜市・川崎市・東京都（西東京エリア・都内の一部）の6件です（2026-11-06 にオーナー確認）。
+
+- 地域を追加・削除したら、`src/data/coverage.ts` と `src/data/recruit-guides.ts`（エリア別ガイド）、
+  `src/data/site.ts` のフッターナビ、`src/data/jobs.ts` の勤務地もあわせて更新してください
+- 旧「神戸市西区」のページは神戸市全体のページに広げ、旧URL（`/area/kobe-nishi` `/recruit/kobe-nishi`）は
+  `next.config.ts` で新しいURLへ 308 転送しています
+- 加古川市・横浜市・川崎市・東京都のページは、地域を特定しない写真を使用しています。
+  現地の写真が用意できたら差し替え、alt も地域名入りに修正してください
 
 ---
 
@@ -397,14 +406,16 @@ NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=XXXX
    `https://www.jungle-transport24.com/jobs/akashi-light-cargo-driver` を入力し、
    `JobPosting` が検出されエラーが出ないことを確認
 3. Search Console の **拡張 → 求人情報** で検出状況とエラーを確認
-4. 「明石 軽貨物ドライバー 求人」で検索し、求人ボックスへの掲載を確認
+4. 「神戸 軽貨物ドライバー 求人」「横浜 軽貨物ドライバー 求人」などで検索し、求人ボックスへの掲載を確認
 
 ### 本サイトの JobPosting 実装方針
 
 - **求人詳細ページのみに設置**。求人一覧・採用ガイド・地域ページには設置していません
 - `status: 'open'` かつ `verified: true` の求人でのみ出力します
 - **構造化データの内容は画面の表示と一致させています**。画面に出していない条件を構造化データにだけ入れることはありません
-- `jobLocation` には**実際に稼働する場所**（明石市・神戸市西区）を出力しています。会社所在地とは区別しています
+- `jobLocation` には**実際に稼働する場所**（神戸市・明石市・加古川市・横浜市・川崎市・東京都）を出力しています。会社所在地とは区別しています
+  - 東京都は「西東京エリア・都内の一部」で市区町村を特定できないため、`addressLocality` を出さず都道府県のみ出力しています
+- 求人の slug（`akashi-light-cargo-driver`）は、当初の明石エリアの募集のときのまま残しています。URLを変えると掲載がリセットされるためです
 - `validThrough` は募集期限が実在しないため出力していません
 - 報酬は確定給与ではないため `estimatedSalary` として出力しています
 - 応募方法をページ内に明示し、`directApply: true` を設定しています
@@ -503,29 +514,38 @@ npm run indexing:delete -- https://www.jungle-transport24.com/jobs/akashi-light-
 
 ## ページ一覧
 
-全38ページ。狙う検索意図の詳細は [docs/seo-keyword-map.md](docs/seo-keyword-map.md) を参照してください。
+全45ページ。狙う検索意図の詳細は [docs/seo-keyword-map.md](docs/seo-keyword-map.md) を参照してください。
 
 | パス | 内容 | 主な対策キーワード |
 | --- | --- | --- |
-| `/` | トップページ | 兵庫 軽貨物配送／明石 軽貨物配送 |
-| `/service` | 事業内容 | 明石 配送会社 |
-| `/service/home-delivery` | 個人宅向け宅配 | 明石 軽貨物 宅配 |
-| `/service/business-delivery` | 企業向け配送 | 明石 企業配送 |
-| `/contact/business` | 法人向け問い合わせ | 明石 配送 依頼 |
-| `/area` | 対応エリア一覧 | 明石 神戸西 配送エリア |
+| `/` | トップページ | 兵庫 軽貨物配送／神奈川 軽貨物配送 |
+| `/service` | 事業内容 | 兵庫 軽貨物配送／神奈川 軽貨物配送 |
+| `/service/home-delivery` | 個人宅向け宅配 | 神戸 軽貨物 宅配 |
+| `/service/business-delivery` | 企業向け配送 | 神戸 企業配送 |
+| `/service/charter` | チャーター便（貸切配送） | 軽貨物 チャーター便 |
+| `/contact/business` | 法人向け問い合わせ | 軽貨物 配送 依頼 |
+| `/area` | 対応エリア一覧 | 兵庫 神奈川 軽貨物 配送エリア |
+| `/area/kobe` | 神戸市 | 神戸市 軽貨物配送 |
 | `/area/akashi` | 明石市 | 明石市 軽貨物配送 |
-| `/area/kobe-nishi` | 神戸市西区 | 神戸市西区 軽貨物配送 |
+| `/area/kakogawa` | 加古川市 | 加古川市 軽貨物配送 |
+| `/area/yokohama` | 横浜市 | 横浜市 軽貨物配送 |
+| `/area/kawasaki` | 川崎市 | 川崎市 軽貨物配送 |
+| `/area/tokyo` | 東京都（西東京エリア・都内の一部） | 西東京 軽貨物配送 |
 | `/about` | JUNGLEについて | JUNGLE 軽貨物 |
 | `/company` | 会社概要 | JUNGLE TRANSPORT 会社概要 |
 | `/recruit` | 採用トップ | 兵庫 軽貨物ドライバー 求人 |
+| `/recruit/kobe` | 神戸市で働く | 神戸 軽貨物ドライバー 求人 |
 | `/recruit/akashi` | 明石で働く | 明石 軽貨物ドライバー 求人 |
-| `/recruit/kobe-nishi` | 神戸市西区で働く | 神戸市西区 軽貨物ドライバー 求人 |
+| `/recruit/kakogawa` | 加古川市で働く | 加古川 軽貨物ドライバー 求人 |
+| `/recruit/yokohama` | 横浜市で働く | 横浜 軽貨物ドライバー 求人 |
+| `/recruit/kawasaki` | 川崎市で働く | 川崎 軽貨物ドライバー 求人 |
+| `/recruit/tokyo` | 東京都で働く | 西東京 軽貨物ドライバー 求人 |
 | `/recruit/beginner` | 未経験から始める | 軽貨物ドライバー 未経験 兵庫 |
 | `/recruit/no-vehicle` | 車を持っていない方へ | 軽貨物ドライバー 車なし 兵庫 |
-| `/recruit/contractor` | 業務委託について | 明石 業務委託ドライバー |
+| `/recruit/contractor` | 業務委託について | 兵庫 業務委託ドライバー |
 | `/jobs` | 求人一覧（**JobPostingなし**） | 兵庫 軽貨物 求人一覧 |
-| `/jobs/[slug]` | 求人詳細（**JobPostingあり**） | 明石 軽貨物ドライバー 求人 |
-| `/work` | 仕事内容 | 明石 軽貨物 仕事内容 |
+| `/jobs/[slug]` | 求人詳細（**JobPostingあり**） | 兵庫・神奈川 軽貨物ドライバー 求人 |
+| `/work` | 仕事内容 | 兵庫 軽貨物 仕事内容 |
 | `/beginner` | 未経験の方へ | 軽貨物 未経験 必要なもの |
 | `/daily-flow` | 1日の流れ | 軽貨物ドライバー 1日の流れ |
 | `/faq` | よくある質問 | 軽貨物 業務委託 質問 |
@@ -533,7 +553,6 @@ npm run indexing:delete -- https://www.jungle-transport24.com/jobs/akashi-light-
 | `/authors/jungle-recruitment` | 運営者情報（E-E-A-T） | — |
 | `/entry` | 応募フォーム | — |
 | `/entry/thanks` | 送信完了（**noindex**） | — |
-| `/contact/business/thanks` | 送信完了（**noindex**） | — |
 | `/privacy` `/job-policy` | ポリシー | — |
 
 ---
@@ -550,8 +569,9 @@ npm run indexing:delete -- https://www.jungle-transport24.com/jobs/akashi-light-
 - 電話番号：**090-7756-2400**
 - 所在地：**兵庫県神戸市西区玉津町出合44-1**
 - メールアドレス：サイト非掲載（オーナー指示）
-- 対象エリア：兵庫県明石市・神戸市西区
-- 事業内容：軽貨物配送（宅配・企業配送）／引越し／遺品回収／不動産関連業務
+- 拠点：**兵庫県・神奈川県**（2026-11-06 オーナー確認）
+- 対象エリア：兵庫県（神戸市・明石市・加古川市）／神奈川県（横浜市・川崎市）／東京都（西東京エリア・都内の一部）（2026-11-06 オーナー確認。当初は明石市・神戸市西区）
+- 事業内容：軽貨物配送（宅配・企業配送・**チャーター便**）／引越し／遺品回収／不動産関連業務（チャーター便は 2026-11-06 オーナー確認）
 - 募集条件：業務委託契約、要普通自動車運転免許、未経験可、女性歓迎
 - 「未経験でも月収30万円〜可能」という**報酬例**
 - 車両リースあり／日当保証あり

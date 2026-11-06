@@ -12,6 +12,8 @@
  *   README の「オーナーへ確認が必要な情報」に一覧化しています。
  */
 
+import { baseText, coverageText } from './coverage';
+
 export type Field = {
   /** 未確認の場合は null */
   value: string | null;
@@ -51,10 +53,14 @@ export const company = {
   licenseNumber: unverified('貨物軽自動車運送事業の届出番号（届出年月日と運輸支局名を含む）'),
   corporateNumber: unverified('法人番号（法人の場合）。個人事業の場合はその旨'),
 
-  /** 事業内容（Instagramプロフィールで確認済み） */
-  businessSummary: confirmed('軽貨物配送（個人宅向け宅配・企業向け配送）／引越し／遺品回収／不動産関連業務'),
-  /** 稼働エリア（Instagram求人投稿で確認済み） */
-  serviceArea: confirmed('兵庫県明石市・神戸市西部を中心とした地域'),
+  /** 事業内容（Instagramプロフィールで確認済み。チャーター便は 2026-11-06 にオーナー確認） */
+  businessSummary: confirmed(
+    '軽貨物配送（個人宅向け宅配・企業向け配送・チャーター便）／引越し／遺品回収／不動産関連業務',
+  ),
+  /** 拠点（2026-11-06 オーナー確認。値は coverage.ts で管理） */
+  bases: confirmed(baseText),
+  /** 稼働エリア（2026-11-06 オーナー確認。値は coverage.ts で管理） */
+  serviceArea: confirmed(coverageText),
 } as const;
 
 /** 住所を1行にまとめる。未確認部分は出力しません */
@@ -85,6 +91,7 @@ export const companyProfileRows = (): CompanyRow[] =>
     { label: 'ブランド表記', value: show(company.brandName), note: 'ロゴ・サイト上の表記' },
     { label: '代表者', value: show(company.representative) },
     { label: '所在地', value: formattedAddress() },
+    { label: '拠点', value: show(company.bases) },
     { label: '電話番号', value: show(company.tel), note: '配送のご依頼・採用のお問い合わせを承ります' },
     { label: '受付時間', value: show(company.telHours) },
     { label: '設立', value: show(company.founded) },

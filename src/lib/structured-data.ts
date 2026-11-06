@@ -5,6 +5,7 @@ import {
   show,
 } from '@/data/company';
 import { columnAuthor, type Column } from '@/data/columns';
+import { coverageRegions } from '@/data/coverage';
 import type { FaqItem } from '@/data/faq';
 import { canEmitJobPosting, type Job } from '@/data/jobs';
 import { siteConfig, socialLinks } from '@/data/site';
@@ -45,10 +46,10 @@ export function postalAddress() {
   };
 }
 
-const areaServed = [
-  { '@type': 'AdministrativeArea', name: '兵庫県明石市' },
-  { '@type': 'AdministrativeArea', name: '兵庫県神戸市西区' },
-];
+/** 対応エリア。coverage.ts（画面の表記と同じデータ）から生成します */
+const areaServed = coverageRegions.flatMap((region) =>
+  region.cities.map((city) => ({ '@type': 'AdministrativeArea', name: city.fullName })),
+);
 
 /* ------------------------------ Organization ------------------------------ */
 
@@ -239,7 +240,7 @@ function jobDescriptionHtml(job: Job) {
     `<h3>必要な学歴</h3><p>${escapeHtml(job.educationRequirements)}</p>`,
     list('求められること', job.skills),
     list('待遇・サポート', job.benefits),
-    `<h3>勤務地</h3><p>${escapeHtml(job.areas.join('／'))}（配送エリア：${escapeHtml(job.deliveryAreas.join('／'))}）</p>`,
+    `<h3>勤務地</h3><p>${escapeHtml(job.areas.join('／'))}</p>`,
     specLines ? `<h3>募集条件</h3><ul>${specLines}</ul>` : '',
     list('ご注意', job.notes),
   ]
@@ -304,7 +305,8 @@ export function jobPostingJsonLd(job: Job) {
         '@type': 'PostalAddress',
         addressCountry: 'JP',
         addressRegion: loc.region,
-        addressLocality: loc.locality,
+        // 東京都のように市区町村を特定しない勤務地は addressLocality を出力しません
+        ...(loc.locality ? { addressLocality: loc.locality } : {}),
         ...(loc.postalCode ? { postalCode: loc.postalCode } : {}),
         ...(loc.street ? { streetAddress: loc.street } : {}),
       },

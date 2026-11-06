@@ -20,9 +20,9 @@ import { openJobs } from '@/data/jobs';
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: '軽貨物ドライバー求人一覧｜兵庫県明石市・神戸市西区',
+  title: '軽貨物ドライバー求人一覧｜兵庫・神奈川・東京',
   description:
-    'JUNGLEが現在募集している求人の一覧です。兵庫県明石市・神戸市西部エリアの軽貨物ドライバー求人を掲載しています。募集中の求人のみを表示しています。',
+    'JUNGLEが現在募集している求人の一覧です。兵庫県・神奈川県・東京都の対応エリアで働く軽貨物ドライバーの求人を掲載しています。募集中の求人のみを表示しています。',
   path: '/jobs',
 });
 
@@ -81,13 +81,15 @@ export default function JobsPage() {
                         <p className="mt-3 text-sm leading-7 text-body">{job.summary}</p>
 
                         <dl className="mt-6 grid gap-x-10 gap-y-3 text-xs sm:grid-cols-2">
-                          <div className="flex gap-3">
+                          <div className="flex gap-3 sm:col-span-2">
                             <dt className="w-20 shrink-0 font-bold text-body/50">募集地域</dt>
-                            <dd className="text-body">{job.areas.join('／')}</dd>
-                          </div>
-                          <div className="flex gap-3">
-                            <dt className="w-20 shrink-0 font-bold text-body/50">配送エリア</dt>
-                            <dd className="text-body">{job.deliveryAreas.join('／')}</dd>
+                            <dd className="text-body">
+                              {job.areas.map((area) => (
+                                <span key={area} className="block">
+                                  {area}
+                                </span>
+                              ))}
+                            </dd>
                           </div>
                           {job.salary && (
                             <div className="flex gap-3">

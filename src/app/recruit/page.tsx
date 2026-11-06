@@ -14,11 +14,12 @@ import { openJobs } from '@/data/jobs';
 import { faqsByIds } from '@/data/faq';
 import { applicationSteps, workFeatures } from '@/data/process';
 import { columns } from '@/data/columns';
+import { coverageRegions } from '@/data/coverage';
 
 export const metadata: Metadata = buildMetadata({
-  title: '兵庫県の軽貨物ドライバー求人｜未経験者も募集',
+  title: '兵庫・神奈川・東京の軽貨物ドライバー求人｜未経験者も募集',
   description:
-    'JUNGLE TRANSPORTは兵庫県明石市・神戸市西区で軽貨物ドライバーを募集しています。業務委託契約・未経験可・車両リースあり・日当保証あり。エリア別・条件別の採用ガイドもご用意しています。',
+    'JUNGLE TRANSPORTは兵庫県・神奈川県・東京都で軽貨物ドライバーを募集しています。業務委託契約・未経験可・車両リースあり・日当保証あり。エリア別・条件別の採用ガイドもご用意しています。',
   path: '/recruit',
 });
 
@@ -42,12 +43,14 @@ export default function RecruitPage() {
         eyebrow="Recruit"
         title={
           <>
-            兵庫県の軽貨物ドライバー求人。
+            兵庫・神奈川・東京の
+            <br />
+            軽貨物ドライバー求人。
             <br />
             JUNGLEから始める。
           </>
         }
-        lead="事業拡大にともない、明石・神戸西エリアで走る軽貨物ドライバーを募集しています。普通自動車運転免許があれば、配送の実務経験がない方も応募いただけます。"
+        lead="事業拡大にともない、兵庫県と神奈川県の拠点を中心に、東京都の一部エリアまで走る軽貨物ドライバーを募集しています。普通自動車運転免許があれば、配送の実務経験がない方も応募いただけます。"
         image={imagePaths.driverSunset}
         imageAlt="夕暮れの住宅街で配送を終えたJUNGLEの軽貨物ドライバー"
       />
@@ -60,7 +63,7 @@ export default function RecruitPage() {
           <dl className="grid gap-px bg-ink/15 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { label: '契約形態', value: '業務委託', note: '個人事業主としての契約' },
-              { label: '募集エリア', value: '明石・神戸西', note: '兵庫県内が中心' },
+              { label: '募集エリア', value: '兵庫・神奈川', note: '東京都の一部エリアも募集' },
               { label: '必要な免許', value: '普通免許', note: '大型・二種は不要' },
               { label: '配送経験', value: '不問', note: '未経験の方も応募可' },
             ].map((item) => (
@@ -113,6 +116,35 @@ export default function RecruitPage() {
               </li>
             ))}
           </ul>
+
+          {/* エリア別の採用ガイド */}
+          <div className="mt-16">
+            <h3 className="text-lg font-bold text-ink sm:text-xl">エリア別の採用情報</h3>
+            <p className="mt-3 text-sm leading-7 text-body">
+              エリアごとの走りやすさや、通勤しやすい地域をまとめています。
+            </p>
+            <div className="mt-6 grid gap-px border border-line bg-line md:grid-cols-3">
+              {coverageRegions.map((region) => (
+                <div key={region.prefecture} className="bg-mist p-7">
+                  <div className="flex items-center gap-3">
+                    <h4 className="text-base font-bold text-ink">{region.prefecture}</h4>
+                    {region.isBase && (
+                      <span className="bg-jungle px-2 py-1 text-[0.6875rem] leading-none font-bold text-ink">
+                        拠点
+                      </span>
+                    )}
+                  </div>
+                  <ul className="mt-5 space-y-3.5">
+                    {region.cities.map((city) => (
+                      <li key={city.slug}>
+                        <TextLink href={`/recruit/${city.slug}`}>{city.name}で働く</TextLink>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
         </Container>
       </Section>
 

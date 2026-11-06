@@ -46,7 +46,7 @@ export const imagePaths = {
   driverSunset: '/images/jungle-driver-residential-sunset.webp',
   /** 明石市内の住宅街を走行する軽バン */
   vanAkashiStreet: '/images/light-cargo-van-akashi-street.webp',
-  /** 青空の下を走行する軽バン（神戸市西区の紹介に使用） */
+  /** 青空の下を走行する軽バン（神戸市の紹介に使用） */
   vanKobeNishi: '/images/kobe-nishi-delivery-van.webp',
 
   /* ------------------------------ 4:3（本文向け） ------------------------------ */

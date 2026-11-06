@@ -13,15 +13,29 @@ import { openJobs } from '@/data/jobs';
 import { columns } from '@/data/columns';
 import { applicationSteps, dailyFlowSteps, workFeatures } from '@/data/process';
 import { companyProfileRows } from '@/data/company';
+import { baseText, coverageRegions, regionLabel } from '@/data/coverage';
 import { businessDefinition } from '@/data/site';
 
 export const metadata: Metadata = buildMetadata({
   // ルートページには layout の title.template が適用されないため、サイト名まで明記します
-  title: '兵庫・明石の軽貨物配送とドライバー求人｜JUNGLE',
+  title: '兵庫・神奈川の軽貨物配送とドライバー求人｜JUNGLE',
   description:
-    'JUNGLE TRANSPORTは兵庫県明石市・神戸市西区で個人宅向け宅配と企業向け配送を行う軽貨物配送事業者です。配送のご依頼と、軽貨物ドライバーの求人情報を掲載しています。',
+    'JUNGLE TRANSPORTは兵庫県と神奈川県を拠点に、神戸・明石・加古川、横浜・川崎、東京都の一部で宅配・企業配送・チャーター便を行う軽貨物配送事業者です。軽貨物ドライバーも募集しています。',
   path: '/',
 });
+
+/** 対応エリアを都県ごとに改行して表示する */
+function CoverageLines() {
+  return (
+    <>
+      {coverageRegions.map((region) => (
+        <span key={region.prefecture} className="block">
+          {regionLabel(region)}
+        </span>
+      ))}
+    </>
+  );
+}
 
 const topFaqIds = ['beginner-ok', 'vehicle-lease', 'money-contract', 'work-area', 'apply-how'];
 
@@ -72,17 +86,17 @@ export default function HomePage() {
 
         <Container size="wide" className="relative z-10 pb-14 sm:pt-32 sm:pb-28">
           <p className="display text-xs tracking-[0.3em] text-jungle sm:text-sm">
-            Light Cargo Delivery / Hyogo · Akashi
+            Light Cargo Delivery / Hyogo · Kanagawa
           </p>
 
           <h1 className="mt-5 text-[2.5rem] leading-[1.12] font-bold text-white sm:mt-7 sm:text-[4.5rem] lg:text-[5.75rem]">
-            兵庫の街を、
+            兵庫と神奈川の
             <br />
-            走る。
+            街を、走る。
           </h1>
 
           <p className="mt-7 max-w-2xl text-[0.9375rem] leading-8 text-white/80 sm:mt-8 sm:text-base">
-            JUNGLE TRANSPORTは、兵庫県明石市・神戸市西部を中心に軽貨物配送を行っています。個人宅への宅配から企業配送まで、地域の「運ぶ」を担う仕事です。
+            JUNGLE TRANSPORTは、兵庫県と神奈川県を拠点に軽貨物配送を行っています。兵庫県の神戸市・明石市・加古川市、神奈川県の横浜市・川崎市、東京都の一部エリアで、宅配・企業配送からチャーター便まで対応します。
           </p>
         </Container>
       </section>
@@ -96,7 +110,7 @@ export default function HomePage() {
                 {businessDefinition}
               </h2>
               <p className="mt-6 text-[0.9375rem] leading-8 text-body">
-                取り扱うのは、軽自動車に積載できるサイズの荷物です。通販商品などを個人宅へお届けする宅配と、企業・事業所の間を結ぶ企業配送の両方を担当しています。事業拡大にともない、明石市・神戸市西区で走る
+                取り扱うのは、軽自動車に積載できるサイズの荷物です。通販商品などを個人宅へお届けする宅配、企業・事業所の間を結ぶ企業配送に加え、車両1台を貸し切るチャーター便にも対応しています。事業拡大にともない、兵庫県・神奈川県・東京都で走る
                 <strong className="font-bold text-ink">軽貨物ドライバーを募集</strong>
                 しています。普通自動車運転免許があれば、配送の実務経験がない方も応募いただけます。
               </p>
@@ -113,11 +127,12 @@ export default function HomePage() {
             {/* 事業者情報の要点。AI検索・ローカル検索で拾われやすいよう定義形式で置く */}
             <dl className="rule-list border-t-2 border-ink">
               {[
-                ['事業内容', '軽貨物配送（個人宅向け宅配・企業向け配送）'],
-                ['対応エリア', '兵庫県明石市・神戸市西区'],
-                ['募集職種', '軽貨物ドライバー（業務委託）'],
-                ['応募資格', '普通自動車運転免許（配送経験・学歴は不問）'],
-              ].map(([label, value]) => (
+                { label: '事業内容', value: '軽貨物配送（個人宅向け宅配・企業向け配送・チャーター便）' },
+                { label: '拠点', value: baseText },
+                { label: '対応エリア', value: <CoverageLines /> },
+                { label: '募集職種', value: '軽貨物ドライバー（業務委託）' },
+                { label: '応募資格', value: '普通自動車運転免許（配送経験・学歴は不問）' },
+              ].map(({ label, value }) => (
                 <div key={label} className="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
                   <dt className="w-28 shrink-0 text-xs font-bold text-body/60">{label}</dt>
                   <dd className="text-sm leading-7 font-bold text-ink">{value}</dd>
@@ -142,8 +157,8 @@ export default function HomePage() {
               />
               {/* 写真の一部を枠外へはみ出させる */}
               <div className="absolute -right-4 -bottom-8 bg-jungle px-6 py-5 sm:-right-8 sm:px-8">
-                <p className="display text-3xl leading-none text-ink sm:text-4xl">HYOGO</p>
-                <p className="mt-1.5 text-xs font-bold text-ink/70">明石・神戸西エリア</p>
+                <p className="display text-2xl leading-none text-ink sm:text-4xl">Hyogo / Kanagawa</p>
+                <p className="mt-1.5 text-xs font-bold text-ink/70">兵庫県・神奈川県を拠点に</p>
               </div>
             </div>
 
@@ -160,7 +175,7 @@ export default function HomePage() {
               />
               <div className="prose-jungle mt-8 text-[0.9375rem]">
                 <p>
-                  JUNGLEは兵庫エリアを拠点に、軽貨物配送を中心とした事業を行っています。通販商品を個人宅へ届ける宅配と、企業や事業所の間を結ぶ企業配送。どちらも、地域の生活と仕事を支える仕事です。
+                  JUNGLEは兵庫県と神奈川県を拠点に、軽貨物配送を中心とした事業を行っています。通販商品を個人宅へ届ける宅配、企業や事業所の間を結ぶ企業配送、そして車両1台を貸し切って運ぶチャーター便。どれも、地域の生活と仕事を支える仕事です。
                 </p>
                 <p>
                   配送以外にも、不動産関連の業務、引越し、遺品回収などに取り組んできました。「運ぶ」ことを軸に、地域の困りごとに幅広く応えてきたことが、いまの事業の広がりにつながっています。
@@ -193,7 +208,7 @@ export default function HomePage() {
             </div>
             <div className="border-t-2 border-ink/20 pt-8 lg:border-t-0 lg:border-l-2 lg:pt-0 lg:pl-16">
               <h2 className="text-xl leading-relaxed font-bold text-ink sm:text-2xl">
-                明石・神戸西エリアで走る軽貨物ドライバーを募集しています
+                兵庫・神奈川・東京で走る軽貨物ドライバーを募集しています
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-ink/80">
                 契約形態は業務委託です。普通自動車運転免許があれば、配送の実務経験がない方も応募いただけます。車両リース・日当保証・同乗研修をご用意しています。
@@ -435,21 +450,37 @@ export default function HomePage() {
           <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
             <SectionHeading eyebrow="Area" tone="light" title="募集地域" />
             <div>
-              <div className="flex flex-wrap gap-3">
-                {['兵庫県明石市', '兵庫県神戸市西区', '兵庫県神戸市垂水区'].map((area) => (
-                  <span
-                    key={area}
-                    className="border border-white/25 px-5 py-2.5 text-sm font-bold text-white"
-                  >
-                    {area}
-                  </span>
+              {/* 都県ごとに並べ、各エリアの採用ガイドへ直接移動できるようにしています */}
+              <dl className="space-y-6">
+                {coverageRegions.map((region) => (
+                  <div key={region.prefecture} className="flex flex-col gap-3 sm:flex-row sm:gap-6">
+                    <dt className="flex shrink-0 items-center gap-2.5 text-sm font-bold text-white sm:h-11 sm:w-32">
+                      {region.prefecture}
+                      {region.isBase && (
+                        <span className="bg-jungle px-1.5 py-0.5 text-[0.6875rem] leading-none font-bold text-ink">
+                          拠点
+                        </span>
+                      )}
+                    </dt>
+                    <dd className="flex flex-wrap gap-3">
+                      {region.cities.map((city) => (
+                        <Link
+                          key={city.slug}
+                          href={`/recruit/${city.slug}`}
+                          className="inline-flex min-h-11 items-center border border-white/25 px-5 text-sm font-bold text-white transition-colors hover:border-jungle hover:text-jungle"
+                        >
+                          {city.name}
+                        </Link>
+                      ))}
+                    </dd>
+                  </div>
                 ))}
-              </div>
+              </dl>
               <p className="mt-8 max-w-2xl text-sm leading-8 text-white/70">
-                配送エリアは明石エリアおよび神戸西エリアが中心です。上記エリア外にお住まいの方でも、通勤が可能であればご相談いただけます。担当エリアが兵庫県内に集約されているため、長距離の移動が続くことはありません。
+                兵庫県と神奈川県を拠点に、上記のエリアで配送を行っています。担当エリアは案件の状況とご希望をふまえて決まり、決まった範囲を繰り返し走る働き方が中心です。上記エリアの外にお住まいの方でも、通勤が可能であればご相談いただけます。
               </p>
-              <TextLink href="/columns/working-in-akashi" tone="light" className="mt-8">
-                明石市で働く特徴を読む
+              <TextLink href="/area" tone="light" className="mt-8">
+                対応エリアの詳細を見る
               </TextLink>
             </div>
           </div>
@@ -575,8 +606,14 @@ export default function HomePage() {
                   <dd className="text-sm leading-7 text-body">JUNGLE TRANSPORT</dd>
                 </div>
                 <div className="flex flex-col gap-1 py-5 sm:flex-row sm:gap-8">
+                  <dt className="w-36 shrink-0 text-sm font-bold text-ink">拠点</dt>
+                  <dd className="text-sm leading-7 text-body">{baseText}</dd>
+                </div>
+                <div className="flex flex-col gap-1 py-5 sm:flex-row sm:gap-8">
                   <dt className="w-36 shrink-0 text-sm font-bold text-ink">主な稼働エリア</dt>
-                  <dd className="text-sm leading-7 text-body">兵庫県（明石市・神戸市西部を中心に）</dd>
+                  <dd className="text-sm leading-7 text-body">
+                    <CoverageLines />
+                  </dd>
                 </div>
                 {businessRow?.value && (
                   <div className="flex flex-col gap-1 py-5 sm:flex-row sm:gap-8">
@@ -607,11 +644,12 @@ export default function HomePage() {
               <div className="mt-6 border-l-4 border-jungle bg-mist px-6 py-6">
                 <p className="text-sm font-bold text-ink">法人・事業者のお客様へ</p>
                 <p className="mt-2.5 text-sm leading-7 text-body">
-                  配送業務のご依頼・ご相談も承っています。ドライバー応募とは窓口が異なりますので、事業内容ページよりご確認ください。
+                  宅配・企業配送のご依頼に加え、車両1台を貸し切るチャーター便のご相談も承っています。ドライバー応募とは窓口が異なりますので、事業内容ページよりご確認ください。
                 </p>
-                <TextLink href="/service" className="mt-5">
-                  配送のご相談について
-                </TextLink>
+                <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
+                  <TextLink href="/service">配送のご相談について</TextLink>
+                  <TextLink href="/service/charter">チャーター便について</TextLink>
+                </div>
               </div>
             </div>
           </div>

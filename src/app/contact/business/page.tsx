@@ -9,11 +9,12 @@ import { imagePaths } from '@/lib/images';
 import { detailServices } from '@/data/services';
 import { socialLinks } from '@/data/site';
 import { company, show } from '@/data/company';
+import { coverageLines } from '@/data/coverage';
 
 export const metadata: Metadata = buildMetadata({
   title: '配送のご依頼・法人向けお問い合わせ',
   description:
-    '兵庫県明石市・神戸市西区での軽貨物配送のご依頼を承ります。個人宅向け宅配・企業向け配送について、お電話またはInstagramで荷物の内容とエリアをお知らせください。',
+    '兵庫県・神奈川県・東京都の一部エリアでの軽貨物配送のご依頼を承ります。宅配・企業配送・チャーター便について、お電話またはInstagramで荷物の内容とエリアをお知らせください。',
   path: '/contact/business',
 });
 
@@ -27,8 +28,8 @@ const crumbs: Crumb[] = [
 const checklist = [
   { label: '荷物の種類', example: '段ボール・書類・部品など。おおよそのサイズと数量' },
   { label: '集荷場所', example: '倉庫・店舗・事業所などの所在地' },
-  { label: '配送先エリア', example: '明石市内、神戸市西区など' },
-  { label: '頻度・時間帯', example: '毎日／週数回／スポット、到着時間の指定の有無' },
+  { label: '配送先エリア', example: '神戸市内、横浜市内など' },
+  { label: '頻度・時間帯', example: '毎日／週数回／スポット／チャーター便（貸切）、到着時間の指定の有無' },
 ];
 
 export default function BusinessContactPage() {
@@ -42,9 +43,9 @@ export default function BusinessContactPage() {
           webPageJsonLd({
             name: '配送のご依頼・法人向けお問い合わせ',
             description:
-              '兵庫県明石市・神戸市西区での軽貨物配送のご依頼を承る、法人・事業者向けのお問い合わせ窓口です。',
+              '兵庫県・神奈川県・東京都の一部エリアでの軽貨物配送とチャーター便のご依頼を承る、法人・事業者向けのお問い合わせ窓口です。',
             path: '/contact/business',
-            updatedAt: '2026-09-15',
+            updatedAt: '2026-11-06',
           }),
         ]}
       />
@@ -52,7 +53,7 @@ export default function BusinessContactPage() {
       <PageHero
         eyebrow="For Business"
         title="配送のご依頼・ご相談"
-        lead="兵庫県明石市・神戸市西区での軽貨物配送を承っています。お電話またはInstagramで荷物の内容と配送先のエリアをお知らせいただければ、対応可否をご回答します。"
+        lead="兵庫県と神奈川県を拠点に、東京都の一部エリアまで軽貨物配送とチャーター便を承っています。お電話またはInstagramで荷物の内容と配送先のエリアをお知らせいただければ、対応可否をご回答します。"
         image={imagePaths.businessWarehouse}
         imageAlt="事業所で企業向けの荷物を仕分けするJUNGLE TRANSPORTのスタッフ"
       />
@@ -122,7 +123,9 @@ export default function BusinessContactPage() {
               {/* 対応できること */}
               <div className="border-t-2 border-ink pt-7">
                 <h2 className="display text-xs tracking-[0.2em] text-jungle-deep">What We Do</h2>
-                <p className="mt-4 text-sm leading-7 text-body">対応している配送は以下の2種類です。</p>
+                <p className="mt-4 text-sm leading-7 text-body">
+                  対応している配送は以下の{detailServices().length}種類です。
+                </p>
                 <ul className="mt-5 space-y-4">
                   {detailServices().map((service) => (
                     <li key={service.id}>
@@ -137,8 +140,9 @@ export default function BusinessContactPage() {
               <div className="border-t-2 border-ink pt-7">
                 <h2 className="display text-xs tracking-[0.2em] text-jungle-deep">Area</h2>
                 <ul className="mt-4 space-y-2 text-sm leading-7 font-bold text-ink">
-                  <li>兵庫県明石市（全域）</li>
-                  <li>兵庫県神戸市西区</li>
+                  {coverageLines.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
                 </ul>
                 <p className="mt-3 text-xs leading-6 text-body/70">
                   近隣地域への配送についてはご相談ください。稼働状況により対応可能な範囲が変わります。

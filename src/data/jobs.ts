@@ -80,10 +80,11 @@ export type Job = {
   /**
    * 勤務地（実際に稼働する場所）。会社所在地とは別物として扱います。
    * 複数の市区町村で稼働する場合は配列に追加してください。
+   * 市区町村を特定しない場合（東京都の一部エリアなど）は locality を null にします。
    */
-  jobLocations: { region: string; locality: string; postalCode: string | null; street: string | null }[];
+  jobLocations: { region: string; locality: string | null; postalCode: string | null; street: string | null }[];
+  /** 画面に出す勤務地の表記（都県ごと）。JobPosting の description にも使用 */
   areas: string[];
-  deliveryAreas: string[];
   salary: JobSalary | null;
   /** 仕事内容（JobPosting.responsibilities にも使用） */
   duties: string[];
@@ -110,7 +111,8 @@ export type Job = {
  *
  * 【確認できた事実】
  *   - 軽貨物ドライバーを募集中（事業拡大にともなう募集）
- *   - 対象エリア：兵庫エリア／明石・神戸西エリア
+ *   - 対象エリア：兵庫県（神戸市・明石市・加古川市）／神奈川県（横浜市・川崎市）／
+ *     東京都（西東京エリア・都内の一部）（2026-11-06 オーナー確認。当初は明石・神戸西エリア）
  *   - 仕事内容：軽自動車での宅配・企業配送
  *   - 未経験者も応募可能、女性も歓迎／要普通自動車免許
  *   - 「未経験でも月収30万円〜可能」という報酬例の記載
@@ -121,8 +123,20 @@ export type Job = {
  *   specs 内で value: null、または toConfirm に集約しています。
  *   READMEの「オーナーへ確認が必要な情報」も参照してください。
  */
+/** 求人の勤務地の表記。募集エリアの specs と画面表示で共通に使います */
+const lightCargoDriverAreas = [
+  '兵庫県（神戸市・明石市・加古川市）',
+  '神奈川県（横浜市・川崎市）',
+  '東京都（西東京エリア・都内の一部）',
+];
+
 export const jobs: Job[] = [
   {
+    /*
+     * slug は当初の募集（明石エリア）のときのまま残しています。
+     * URL を変えると検索エンジンに登録済みの求人ページが別ページ扱いになり、
+     * Googleしごと検索の掲載がリセットされるためです。
+     */
     slug: 'akashi-light-cargo-driver',
     status: 'open',
     /*
@@ -136,20 +150,24 @@ export const jobs: Job[] = [
      * false の間は JobPosting が出力されず、Googleしごと検索には掲載されなくなります。
      */
     verified: true,
-    title: '軽貨物ドライバー（明石市・神戸市西部／宅配・企業配送）',
+    title: '軽貨物ドライバー（兵庫・神奈川・東京／宅配・企業配送）',
     summary:
-      '兵庫県明石市と神戸市西部を配送エリアとする軽貨物ドライバーの募集です。軽自動車で個人宅への宅配と企業向けの配送を担当します。業務委託契約で、普通自動車運転免許があれば未経験の方も応募いただけます。',
+      '兵庫県（神戸市・明石市・加古川市）、神奈川県（横浜市・川崎市）、東京都（西東京エリア・都内の一部）で配送する軽貨物ドライバーの募集です。軽自動車で個人宅への宅配と企業向けの配送を担当します。業務委託契約で、普通自動車運転免許があれば未経験の方も応募いただけます。',
     datePosted: '2026-07-14',
-    updatedAt: '2026-08-02',
+    updatedAt: '2026-11-06',
     validThrough: null,
     contractLabel: '業務委託（個人事業主としての契約）',
     employmentType: 'CONTRACTOR',
     jobLocations: [
+      { region: '兵庫県', locality: '神戸市', postalCode: null, street: null },
       { region: '兵庫県', locality: '明石市', postalCode: null, street: null },
-      { region: '兵庫県', locality: '神戸市西区', postalCode: null, street: null },
+      { region: '兵庫県', locality: '加古川市', postalCode: null, street: null },
+      { region: '神奈川県', locality: '横浜市', postalCode: null, street: null },
+      { region: '神奈川県', locality: '川崎市', postalCode: null, street: null },
+      // 西東京エリア・都内の一部。市区町村を特定できないため都道府県のみ出力します
+      { region: '東京都', locality: null, postalCode: null, street: null },
     ],
-    areas: ['兵庫県明石市', '兵庫県神戸市西区'],
-    deliveryAreas: ['明石市全域', '神戸市西区'],
+    areas: lightCargoDriverAreas,
     salary: {
       headline: '未経験でも月収30万円〜可能',
       basis: [
@@ -189,8 +207,12 @@ export const jobs: Job[] = [
     specs: [
       { label: '職種', value: '軽貨物ドライバー（宅配・企業配送）', summaryTable: true },
       { label: '契約形態', value: '業務委託（個人事業主としての契約）', summaryTable: true },
-      { label: '募集エリア', value: '兵庫県明石市／兵庫県神戸市西区', summaryTable: true },
-      { label: '配送エリア', value: '明石市全域／神戸市西区', summaryTable: true },
+      {
+        label: '募集エリア',
+        value: lightCargoDriverAreas.join('／'),
+        note: '担当エリアは、案件の状況とご希望をふまえて面談時に決定します',
+        summaryTable: true,
+      },
       { label: '応募資格', value: '普通自動車運転免許をお持ちの方（学歴・配送経験は不問）', summaryTable: true },
       {
         label: '報酬',
@@ -270,9 +292,20 @@ export const getJob = (slug: string) => jobs.find((job) => job.slug === slug);
  */
 export const canEmitJobPosting = (job: Job) => job.status === 'open' && job.verified;
 
-/** 指定した市区町村を勤務地に含む募集中の求人 */
+/**
+ * 指定した市区町村を勤務地に含む募集中の求人。
+ * 市区町村を特定しない勤務地（locality: null）は都道府県名で突き合わせます。
+ */
 export const openJobsInLocality = (locality: string) =>
-  openJobs().filter((job) => job.jobLocations.some((loc) => loc.locality === locality));
+  openJobs().filter((job) =>
+    job.jobLocations.some((loc) => (loc.locality ?? loc.region) === locality),
+  );
+
+/** 勤務地の都道府県を短く並べた表記（例：兵庫・神奈川・東京）。タイトルや見出しに使用 */
+export const jobRegionLabel = (job: Job) =>
+  [...new Set(job.jobLocations.map((loc) => loc.region))]
+    .map((region) => region.replace(/[都府県]$/, ''))
+    .join('・') || '兵庫';
 
 /** 募集概要テーブル（ページ冒頭）に出す条件 */
 export const summarySpecs = (job: Job) => job.specs.filter((spec) => spec.summaryTable);

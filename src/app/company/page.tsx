@@ -12,9 +12,9 @@ import { socialLinks } from '@/data/site';
 import { services } from '@/data/services';
 
 export const metadata: Metadata = buildMetadata({
-  title: '会社概要｜兵庫県の軽貨物配送',
+  title: '会社概要｜兵庫・神奈川の軽貨物配送',
   description:
-    '兵庫県明石市・神戸市西部エリアで軽貨物配送を行うJUNGLE TRANSPORTの会社概要です。事業内容、稼働エリア、お問い合わせ方法を掲載しています。',
+    '兵庫県と神奈川県を拠点に軽貨物配送を行うJUNGLE TRANSPORTの会社概要です。事業内容、拠点と稼働エリア、お問い合わせ方法を掲載しています。',
   path: '/company',
 });
 
@@ -34,7 +34,7 @@ export default function CompanyPage() {
       <PageHero
         eyebrow="Company"
         title="会社概要"
-        lead="兵庫県明石市・神戸市西部エリアを中心に軽貨物配送を行うJUNGLE TRANSPORTの基本情報です。"
+        lead="兵庫県と神奈川県を拠点に、東京都の一部エリアまで軽貨物配送を行うJUNGLE TRANSPORTの基本情報です。"
         image={imagePaths.depotCart}
         imageAlt="配送拠点で台車を使って荷物を積み替えるJUNGLEのスタッフ"
       />
